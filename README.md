@@ -1,4 +1,4 @@
-# grunt-processhtml
+# grunt-processhtml [![Build Status](https://travis-ci.org/dciccale/grunt-processhtml.png?branch=master)](https://travis-ci.org/dciccale/grunt-processhtml)
 
 > Process html files at build time to modify them depending on the release environment
 
