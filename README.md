@@ -36,10 +36,12 @@ Process `html` files with special comments:
 
 ### Simple examples
 
+```html
+<!--
 Change only the path of the src attribute and keep the original src filename.
 This will replace the src path of many script tags if inside the build comment block.
+-->
 
-```html
 <!-- build:[src] js/ -->
 <script src="my/deep/development/path/script.js"></script>
 <!-- /build -->
@@ -63,7 +65,11 @@ This will replace the src path of many script tags if inside the build comment b
 <!-- build:template
 <p>Hello, <%= name %></p>
 /build -->
-<!-- notice that the template block is commented to prevent breaking the html file and keeping it functional -->
+
+<!--
+notice that the template block is commented
+to prevent breaking the html file and keeping it functional
+-->
 ```
 
 ### Overview
