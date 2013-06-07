@@ -14,9 +14,6 @@ module.exports = ->
       options:
         jshintrc: ".jshintrc"
 
-    clean:
-      tests: ["tmp"]
-
     processhtml:
       dev:
         options:
