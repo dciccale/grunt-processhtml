@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><%= title %></title>
+
+    <!-- build:[href] img/ -->
+    <link rel="apple-touch-icon-precomposed" href="path/to/my/theme/img/apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="path/to/my/theme/img/apple-touch-icon-72x72-precomposed.png" sizes="72x72">
+    <link rel="apple-touch-icon-precomposed" href="path/to/my/theme/img/apple-touch-icon-114x114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon-precomposed" href="path/to/my/theme/img/apple-touch-icon-144x144-precomposed.png" sizes="144x144">
+    <!-- /build -->
+
+    <!-- build:template
+    <% if (environment === 'dev') { %>
+      <link rel="stylesheet" href="style.css">
+    <% } else if (environment === 'dist') { %>
+      <link rel="stylesheet" href="style.min.css">
+    <% } %>
+    /build -->
+  </head>
+  <body>
+
+    <!-- build:remove -->
+    <p>This should be removed after build</p>
+    <!-- /build -->
+
+    <!-- build:template
+    <p><%= message %></p>
+    /build -->
+
+    <!-- build:js:dist app.min.js -->
+    <script src="js/libs/require/require-2.1.1.dev.js" data-main="js/config.js"></script>
+    <!-- /build -->
+
+  </body>
+</html>

@@ -1,0 +1,140 @@
+'use strict';
+
+var path = require('path');
+
+exports.init = function (grunt) {
+  var _ = grunt.util._;
+  var _tmplData;
+
+  var getBlocks = function (content) {
+    // <!-- build:<type>[:target] [value] -->
+    // - type (required) js, css, href, remove, template
+    // - target|attribute i.e. dev, release or [href] [src]
+    // - value (optional) i.e. script.min.js
+    var regbuild = /<!--\s*build:(\[?\w+\]?)(?::(\w+))?(?:\s*([^\s]+)\s*-->)*/;
+    // <!-- /build -->
+    var regend = /(?:<!--\s*)*\/build\s*-->/;
+    // normalize line endings and split in lines
+    var lines = content.replace(/\r\n/g, '\n').split(/\n/);
+    var inside = false;
+    var sections = [];
+    var block;
+
+    lines.forEach(function (l) {
+      var build = l.match(regbuild);
+      var endbuild = regend.test(l);
+      var attr;
+
+      if (build) {
+        inside = true;
+        attr = build[1].match(/(?:\[(\w+)\])*/)[1];
+        block = {
+          type: attr ? 'attr': build[1],
+          attr: attr,
+          target: build[2],
+          asset: build[3],
+          indent: /^\s*/.exec(l)[0],
+          raw: []
+        };
+      }
+
+      if (inside && block) {
+        block.raw.push(l);
+      }
+
+      if (inside && endbuild) {
+        inside = false;
+        sections.push(block);
+      }
+    });
+
+    return sections;
+  };
+
+  var _escapeRegExp = function (str) {
+    return str.replace(/([.?*+\^=!:$\[\]\\(){}|\-])/g, '\\$1');
+  };
+
+  var _blockToRegExp = function (blockLine) {
+    var escaped = _escapeRegExp(blockLine);
+    return new RegExp(escaped.replace(/^\s*|[\r\n]+\s*/g, '\\s*').replace(/\n{1}$/g, '\\n'));
+  };
+
+  var HTMLProcessor = function (content, tmplData) {
+    this.content = content;
+    _tmplData = tmplData || {};
+    this.target = tmplData.environment;
+    this.linefeed = /\r\n/g.test(content) ? '\r\n' : '\n';
+    this.blocks = getBlocks(content);
+  };
+
+  var _blockTypes = {
+    replaceAsset: function (content, block, blockLine, asset) {
+      var result = content.replace(blockLine, block.indent + asset);
+      return result;
+    },
+
+    css: function (content, block, blockLine, blockContent) {
+      return this.replaceAsset(content, block, blockLine, '<link rel="stylesheet" href="' + block.asset + '">');
+    },
+
+    js: function (content, block, blockLine, blockContent) {
+      return this.replaceAsset(content, block, blockLine, '<script src="' + block.asset + '"><\/script>');
+    },
+
+    attr: function (content, block, blockLine, blockContent) {
+      // only run attr replacer for the block content
+      var re = new RegExp('(\s*(?:' + block.attr + ')=[\'"])(.*)?(".*)', 'gi');
+      var replacedBlock = blockContent.replace(re, function (wholeMatch, start, asset, end) {
+        // check if only the path was provided to leave the original asset name intact
+        asset = !path.extname(block.asset) ? block.asset + path.basename(asset) : block.asset;
+        return start + asset + end;
+      });
+
+      var result = content.replace(blockLine, replacedBlock);
+      return result;
+    },
+
+    remove: function (content, block, blockLine, blockContent) {
+      var blockRegExp = _blockToRegExp(blockLine);
+      var result = content.replace(blockRegExp, '');
+      return result;
+    },
+
+    template: function (content, block, blockLine, blockContent) {
+      var compiledTmpl = _.template(blockContent, _tmplData);
+      // clean template output and fix indent
+      compiledTmpl = block.indent + _.trim(compiledTmpl).replace(/([\r\n])\s*/g, '$1' + block.indent);
+      var result = content.replace(blockLine, compiledTmpl);
+      return result;
+    }
+  };
+
+  HTMLProcessor.prototype._getReplacer = function (block) {
+    var blockLine = block.raw.join(this.linefeed);
+    var blockContent = block.raw.slice(1, -1).join(this.linefeed);
+    var replacer = function (content) {
+      return _blockTypes[block.type](content, block, blockLine, blockContent);
+    };
+
+    return {
+      replace: replacer
+    };
+  };
+
+  HTMLProcessor.prototype.process = function () {
+    var result = this.content;
+
+    this.blocks.forEach(function (block) {
+      var replacer;
+      // parse through correct block type also checking the build target
+      if (_blockTypes[block.type] && (!block.target || block.target === this.target)) {
+        result = this._getReplacer(block).replace(result);
+      }
+    }, this);
+
+    return result;
+  };
+
+  return HTMLProcessor;
+};
