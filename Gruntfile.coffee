@@ -22,7 +22,7 @@ module.exports = (grunt) ->
             message: "This is dev target"
 
         files:
-          "dev/index.html": ["test/fixtures/index.html"]
+          "tmp/dev/index.html": ["test/fixtures/index.html"]
 
       dist:
         options:
@@ -32,7 +32,7 @@ module.exports = (grunt) ->
             message: "This is dist target"
 
         files:
-          "dist/index.html": ["test/fixtures/index.html"]
+          "tmp/dist/index.html": ["test/fixtures/index.html"]
 
     nodeunit:
       tests: ["test/*_test.js"]
