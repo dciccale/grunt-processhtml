@@ -3,10 +3,12 @@
 # Copyright (c) 2013 Denis Ciccale (@tdecs)
 # Licensed under the MIT license.
 # https://github.com/dciccale/grunt-processhtml/blob/master/LICENSE-MIT
-"use strict"
-module.exports = (grunt) ->
 
-  grunt.initConfig
+"use strict"
+
+module.exports = ->
+
+  @initConfig
     jshint:
       all: ["Gruntfile.js", "tasks/*.js", "<%= nodeunit.tests %>"]
       options:
@@ -22,7 +24,7 @@ module.exports = (grunt) ->
             message: "This is dev target"
 
         files:
-          "tmp/dev/index.html": ["test/fixtures/index.html"]
+          "test/fixtures/dev/index.processed.html": ["test/fixtures/index.html"]
 
       dist:
         options:
@@ -32,17 +34,16 @@ module.exports = (grunt) ->
             message: "This is dist target"
 
         files:
-          "tmp/dist/index.html": ["test/fixtures/index.html"]
+          "test/fixtures/dist/index.processed.html": ["test/fixtures/index.html"]
 
     nodeunit:
       tests: ["test/*_test.js"]
 
-  grunt.loadTasks "tasks"
+  @loadTasks "tasks"
 
-  grunt.loadNpmTasks "grunt-contrib-jshint"
-  grunt.loadNpmTasks "grunt-contrib-clean"
-  grunt.loadNpmTasks "grunt-contrib-nodeunit"
+  @loadNpmTasks "grunt-contrib-jshint"
+  @loadNpmTasks "grunt-contrib-nodeunit"
 
-  grunt.registerTask "test", ["clean", "processhtml", "nodeunit"]
+  @registerTask "test", ["processhtml", "nodeunit"]
 
-  grunt.registerTask "default", ["jshint", "test"]
+  @registerTask "default", ["jshint", "test"]
