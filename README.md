@@ -57,7 +57,8 @@ This will replace the src path of many script tags if inside the build comment b
 <!-- /build -->
 
 <!-- build:css style.min.css -->
-<link rel="stylesheet" href="path/to/style.css">
+<link rel="stylesheet" href="path/to/normalize.css">
+<link rel="stylesheet" href="path/to/main.css">
 <!-- /build -->
 <!-- when any process done will change to -->
 <link rel="stylesheet" href="style.min.css">
