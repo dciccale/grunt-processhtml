@@ -1,4 +1,4 @@
-# grunt-processhtml [![Build Status](https://travis-ci.org/dciccale/grunt-processhtml.png?branch=master)](https://travis-ci.org/dciccale/grunt-processhtml)
+# grunt-processhtml [![Build Status](https://travis-ci.org/dciccale/grunt-processhtml.png?branch=master)](https://travis-ci.org/dciccale/grunt-processhtml) [![NPM version](https://badge.fury.io/js/grunt-processhtml.png)](http://badge.fury.io/js/grunt-processhtml)
 
 > Process html files at build time to modify them depending on the release environment
 
