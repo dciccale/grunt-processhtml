@@ -37,6 +37,14 @@
     "grunt": "0.4.x"
   },
   "keywords": [
+    "process",
+    "html",
+    "index",
+    "build",
+    "buildtime",
+    "environment",
+    "target",
+    "optimize",
     "gruntplugin"
   ]
 }
