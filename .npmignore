@@ -3,3 +3,4 @@ test/
 .jshintrc
 .gitignore
 Gruntfile.coffee
+.travis.yml
