@@ -156,7 +156,7 @@ Following the previous task configuration, the `index.html` could look like this
 
 <!-- build:remove -->
 <p>This is the html file without being processed</p>
-<!-- remove -->
+<!-- /build -->
 
 <!-- build:js app.min.js -->
 <script src="js/libs/require.js" data-main="js/config.js"></script>
@@ -228,11 +228,11 @@ when not being processed, is a perfectly valid title string -->
 
 <!-- build:remove -->
 <p>This is the html file without being processed</p>
-<!-- remove -->
+<!-- /build -->
 
 <!-- build:dist:remove -->
 <script src="js/libs/require.js" data-main="js/config.js"></script>
-<!-- -->
+<!-- /build -->
 
 <!-- build:template
 <% if (environment === 'dev') { %>
