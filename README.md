@@ -126,8 +126,10 @@ grunt.initConfig({
         message: 'Hello world!'
       }
     },
-    files: {
-      'dest/index.html': ['index.html']
+    dist: {
+      files: {
+        'dest/index.html': ['index.html']
+      }
     }
   }
 });
@@ -192,7 +194,7 @@ grunt.initConfig({
         }
       },
       files: {
-        'dest/index.html': ['index.html']
+        'dev/index.html': ['index.html']
       }
     },
     dist: {
@@ -202,6 +204,9 @@ grunt.initConfig({
           title: 'My app',
           message: 'This is production distribution'
         }
+      },
+      files: {
+        'dest/index.html': ['index.html']
       }
     }
   }
