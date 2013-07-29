@@ -218,7 +218,7 @@ The `html` to be processed:
 ```html
 <!doctype html>
 <!-- notice that no special comment is used here, as process is true.
-if you don't mine having <%= title %> as the title of your app
+if you don't mind having <%= title %> as the title of your app
 when not being processed, is a perfectly valid title string -->
 <title><%= title %></title>
 
