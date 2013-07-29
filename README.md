@@ -52,7 +52,7 @@ This will replace the src path of many script tags if inside the build comment b
 <p>This will be removed when any process is done</p>
 <!-- /build -->
 
-<!-- build:dist:remove -->
+<!-- build:remove:dist -->
 <p>But this one only when doing processhtml:dist</p>
 <!-- /build -->
 
@@ -235,7 +235,7 @@ when not being processed, is a perfectly valid title string -->
 <p>This is the html file without being processed</p>
 <!-- /build -->
 
-<!-- build:dist:remove -->
+<!-- build:remove:dist -->
 <script src="js/libs/require.js" data-main="js/config.js"></script>
 <!-- /build -->
 
