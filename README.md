@@ -95,7 +95,7 @@ grunt.initConfig({
 Type: `Boolean`
 Default value: `false`
 
-Process the entire `html` file through `grunt.template.process`, a default object with the buld target will be passed to the
+Process the entire `html` file through `grunt.template.process`, a default object with the build target will be passed to the
 template in the form of `{environment: target}` where environment will be the build target of the grunt task.
 
 *Important note: The `process` option is not needed if you don't want to process the entire html file. See the example
