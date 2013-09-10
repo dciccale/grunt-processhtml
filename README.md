@@ -43,9 +43,11 @@ This will replace the src path of many script tags if inside the build comment b
 -->
 
 <!-- build:[src] js/ -->
+<script src="my/lib/path/lib.js"></script>
 <script src="my/deep/development/path/script.js"></script>
 <!-- /build -->
 <!-- this will change only the path to -->
+<script src="js/lib.js"></script>
 <script src="js/script.js"></script>
 
 <!-- build:remove -->
@@ -95,7 +97,7 @@ grunt.initConfig({
 Type: `Boolean`
 Default value: `false`
 
-Process the entire `html` file through `grunt.template.process`, a default object with the buld target will be passed to the
+Process the entire `html` file through `grunt.template.process`, a default object with the build target will be passed to the
 template in the form of `{environment: target}` where environment will be the build target of the grunt task.
 
 *Important note: The `process` option is not needed if you don't want to process the entire html file. See the example
