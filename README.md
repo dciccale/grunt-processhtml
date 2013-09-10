@@ -252,4 +252,5 @@ when not being processed, is a perfectly valid title string -->
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.1.1 Lint js files inside tasks/lib/
 - 0.1.0 Initial release

@@ -70,8 +70,7 @@ exports.init = function (grunt) {
 
   var _blockTypes = {
     replaceAsset: function (content, block, blockLine, asset) {
-      var result = content.replace(blockLine, block.indent + asset);
-      return result;
+      return content.replace(blockLine, block.indent + asset);
     },
 
     css: function (content, block, blockLine, blockContent) {
@@ -84,29 +83,26 @@ exports.init = function (grunt) {
 
     attr: function (content, block, blockLine, blockContent) {
       // only run attr replacer for the block content
-      var re = new RegExp('(\s*(?:' + block.attr + ')=[\'"])(.*)?(".*)', 'gi');
+      var re = new RegExp('(\\s*(?:' + block.attr + ')=[\'"])(.*)?(".*)', 'gi');
       var replacedBlock = blockContent.replace(re, function (wholeMatch, start, asset, end) {
         // check if only the path was provided to leave the original asset name intact
         asset = !path.extname(block.asset) ? block.asset + path.basename(asset) : block.asset;
         return start + asset + end;
       });
 
-      var result = content.replace(blockLine, replacedBlock);
-      return result;
+      return content.replace(blockLine, replacedBlock);
     },
 
     remove: function (content, block, blockLine, blockContent) {
       var blockRegExp = _blockToRegExp(blockLine);
-      var result = content.replace(blockRegExp, '');
-      return result;
+      return content.replace(blockRegExp, '');
     },
 
     template: function (content, block, blockLine, blockContent) {
       var compiledTmpl = _.template(blockContent, _tmplData);
       // clean template output and fix indent
       compiledTmpl = block.indent + _.trim(compiledTmpl).replace(/([\r\n])\s*/g, '$1' + block.indent);
-      var result = content.replace(blockLine, compiledTmpl);
-      return result;
+      return content.replace(blockLine, compiledTmpl);
     }
   };
 
@@ -126,7 +122,6 @@ exports.init = function (grunt) {
     var result = this.content;
 
     this.blocks.forEach(function (block) {
-      var replacer;
       // parse through correct block type also checking the build target
       if (_blockTypes[block.type] && (!block.target || block.target === this.target)) {
         result = this._getReplacer(block).replace(result);
