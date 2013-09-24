@@ -1,16 +1,20 @@
 'use strict';
 
 var path = require('path');
+var fs = require('fs');
+var utils = require('./utils');
 
 exports.init = function (grunt) {
   var _ = grunt.util._;
-  var _tmplData;
+  var _tmplData, _filePath;
 
   var getBlocks = function (content) {
-    // <!-- build:<type>[:target] [value] -->
-    // - type (required) js, css, href, remove, template
-    // - target|attribute i.e. dev, release or [href] [src]
-    // - value (optional) i.e. script.min.js
+    /*
+     * <!-- build:<type>[:target] [value] -->
+     * - type (required) js, css, href, remove, template
+     * - target|attribute i.e. dev, release or [href] [src]
+     * - value (optional) i.e. script.min.js
+    */
     var regbuild = /<!--\s*build:(\[?\w+\]?)(?::(\w+))?(?:\s*([^\s]+)\s*-->)*/;
     // <!-- /build -->
     var regend = /(?:<!--\s*)*\/build\s*-->/;
@@ -51,18 +55,10 @@ exports.init = function (grunt) {
     return sections;
   };
 
-  var _escapeRegExp = function (str) {
-    return str.replace(/([.?*+\^=!:$\[\]\\(){}|\-])/g, '\\$1');
-  };
-
-  var _blockToRegExp = function (blockLine) {
-    var escaped = _escapeRegExp(blockLine);
-    return new RegExp(escaped.replace(/^\s*|[\r\n]+\s*/g, '\\s*').replace(/\n{1}$/g, '\\n'));
-  };
-
-  var HTMLProcessor = function (content, tmplData) {
+  var HTMLProcessor = function (content, tmplData, filePath) {
     this.content = content;
     _tmplData = tmplData || {};
+    _filePath = filePath || '';
     this.target = tmplData.environment;
     this.linefeed = /\r\n/g.test(content) ? '\r\n' : '\n';
     this.blocks = getBlocks(content);
@@ -94,7 +90,7 @@ exports.init = function (grunt) {
     },
 
     remove: function (content, block, blockLine, blockContent) {
-      var blockRegExp = _blockToRegExp(blockLine);
+      var blockRegExp = utils.blockToRegExp(blockLine);
       return content.replace(blockRegExp, '');
     },
 
@@ -103,6 +99,16 @@ exports.init = function (grunt) {
       // clean template output and fix indent
       compiledTmpl = block.indent + _.trim(compiledTmpl).replace(/([\r\n])\s*/g, '$1' + block.indent);
       return content.replace(blockLine, compiledTmpl);
+    },
+
+    include: function (content, block, blockLine, blockContent) {
+      var filePath = path.join(path.dirname(_filePath), block.asset);
+      var fileContent;
+      if (fs.existsSync(filePath)) {
+        fileContent = block.indent + fs.readFileSync(filePath);
+        content = content.replace(blockLine, fileContent);
+      }
+      return content;
     }
   };
 
@@ -121,7 +127,7 @@ exports.init = function (grunt) {
   HTMLProcessor.prototype.process = function () {
     var result = this.content;
 
-    this.blocks.forEach(function (block) {
+    _.each(this.blocks, function (block) {
       // parse through correct block type also checking the build target
       if (_blockTypes[block.type] && (!block.target || block.target === this.target)) {
         result = this._getReplacer(block).replace(result);

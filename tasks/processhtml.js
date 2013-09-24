@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         }
       }).map(function (filepath) {
         var content = grunt.file.read(filepath);
-        var html = new HTMLProcessor(content, data);
+        var html = new HTMLProcessor(content, data, filepath);
         content = html.process();
         if (options.process) {
           content = grunt.template.process(content, options);
