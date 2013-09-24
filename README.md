@@ -27,11 +27,11 @@ Process `html` files with special comments:
 <!-- /build -->
 ```
 
-- type (required) is one of: js, css, remove or template. or any html attribute if written like this: [href], [src],
+- type (required) is one of: `js`, `css`, `remove`, `template` or `include`. or any html attribute if written like this: `[href]`, `[src]`,
   etc.
 - target (optional) is the target name of your grunt task, for example: `dist`. Is supported for all types, so you can
   always specify the target if needed.
-- value (optional) could be: script.min.js or a path if an attribute like [src] is specified to keep the original src
+- value (optional) could be: `script.min.js` or a path if an attribute like `[src]` is specified to keep the original src
   filename intact but replace its path.
 
 ### Simple examples
@@ -50,6 +50,13 @@ This will replace the src path of many script tags if inside the build comment b
 <script src="js/lib.js"></script>
 <script src="js/script.js"></script>
 
+<!-- build:css style.min.css -->
+<link rel="stylesheet" href="path/to/normalize.css">
+<link rel="stylesheet" href="path/to/main.css">
+<!-- /build -->
+<!-- when any process done will change to -->
+<link rel="stylesheet" href="style.min.css">
+
 <!-- build:remove -->
 <p>This will be removed when any process is done</p>
 <!-- /build -->
@@ -58,12 +65,9 @@ This will replace the src path of many script tags if inside the build comment b
 <p>But this one only when doing processhtml:dist</p>
 <!-- /build -->
 
-<!-- build:css style.min.css -->
-<link rel="stylesheet" href="path/to/normalize.css">
-<link rel="stylesheet" href="path/to/main.css">
+<!-- build:include header.html -->
+This will be replaced by the content of header.html
 <!-- /build -->
-<!-- when any process done will change to -->
-<link rel="stylesheet" href="style.min.css">
 
 <!-- build:template
 <p>Hello, <%= name %></p>
@@ -154,16 +158,20 @@ Following the previous task configuration, the `index.html` could look like this
 <link rel="stylesheet" href="main.css">
 <!-- /build -->
 
+<!-- build:js app.min.js -->
+<script src="js/libs/require.js" data-main="js/config.js"></script>
+<!-- /build -->
+
+<!-- build:include header.html -->
+This will be replaced by the content of header.html
+<!-- /build -->
+
 <!-- build:template
 <p><%= message %></p>
 /build -->
 
 <!-- build:remove -->
 <p>This is the html file without being processed</p>
-<!-- /build -->
-
-<!-- build:js app.min.js -->
-<script src="js/libs/require.js" data-main="js/config.js"></script>
 <!-- /build -->
 ```
 
@@ -178,9 +186,11 @@ After processing this file, the output will be:
 
 <link rel="stylesheet" href="style.min.css">
 
-<p>Hello world!</p>
-
 <script src="app.min.js"></script>
+
+<h1>Content from header.html</h1>
+
+<p>Hello world!</p>
 ```
 
 #### Advanced example
@@ -254,5 +264,6 @@ when not being processed, is a perfectly valid title string -->
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.2.0 Add "include" feature
 - 0.1.1 Lint js files inside tasks/lib/
 - 0.1.0 Initial release
