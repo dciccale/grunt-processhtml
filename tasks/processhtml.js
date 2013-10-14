@@ -19,7 +19,6 @@ module.exports = function (grunt) {
       // process the whole file with data object when html processor finishes
       process: false,
       data: {},
-      delimiters: 'lodash',
       templateSettings: null
     });
 
@@ -32,6 +31,7 @@ module.exports = function (grunt) {
     var templateSettings = options.templateSettings;
     if (templateSettings && templateSettings.opener && templateSettings.closer) {
       grunt.template.addDelimiters('lodash', templateSettings.opener, templateSettings.closer);
+      options.delimiters = 'lodash';
     }
 
     this.files.forEach(function (f) {
