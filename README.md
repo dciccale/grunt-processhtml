@@ -308,7 +308,6 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-<<<<<<< HEAD
 - 0.2.1 Added `templateSettings` option tu customize template delimiters
 - 0.2.0 Added the `build:include` feature to include any external file
 - 0.1.1 Lint js files inside tasks/lib/
