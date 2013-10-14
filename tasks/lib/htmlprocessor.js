@@ -2,11 +2,11 @@
 
 var path = require('path');
 var fs = require('fs');
-var utils = require('./utils');
 
 exports.init = function (grunt) {
+  var utils = require('./utils').init(grunt);
   var _ = grunt.util._;
-  var _tmplData, _filePath;
+  var _options, _filePath;
 
   var getBlocks = function (content) {
     /*
@@ -55,11 +55,11 @@ exports.init = function (grunt) {
     return sections;
   };
 
-  var HTMLProcessor = function (content, tmplData, filePath) {
+  var HTMLProcessor = function (content, options, filePath) {
     this.content = content;
-    _tmplData = tmplData || {};
+    _options = options || {};
     _filePath = filePath || '';
-    this.target = tmplData.environment;
+    this.target = _options.data.environment;
     this.linefeed = /\r\n/g.test(content) ? '\r\n' : '\n';
     this.blocks = getBlocks(content);
   };
@@ -95,7 +95,7 @@ exports.init = function (grunt) {
     },
 
     template: function (content, block, blockLine, blockContent) {
-      var compiledTmpl = _.template(blockContent, _tmplData);
+      var compiledTmpl = utils.template(blockContent, _options);
       // clean template output and fix indent
       compiledTmpl = block.indent + _.trim(compiledTmpl).replace(/([\r\n])\s*/g, '$1' + block.indent);
       return content.replace(blockLine, compiledTmpl);

@@ -114,6 +114,20 @@ An object `data` that is passed to the `html` file used to compile all template 
 is true.
 If a custom object is passed as `data`, this will be merged with the default to keep the `environment` key intact.
 
+#### options.templateSettings
+Type: `Object`
+Default value: `null` (Will use default grunt template delimiters `<%` and `%>`)
+
+Define the `templateSettings` option with a custom `opener` and `closer` delimiters to customize the
+template syntax delimiters.
+
+```javascript
+templateSettings: {
+  opener: '{{',
+  closer: '}}'
+}
+```
+
 ### Usage Examples
 
 #### Default Options
@@ -210,12 +224,26 @@ grunt.initConfig({
       files: {
         'dest/index.html': ['index.html']
       }
+    },
+    custom: {
+      options: {
+        templateSettings: {
+          opener: '{{',
+          closer: '}}'
+        },
+        data: {
+          message: 'This has custom template delimiters'
+        }
+      },
+      files: {
+        'custom/custom.html': ['custom.html']
+      }
     }
   }
 });
 ```
 
-The `html` to be processed:
+The `index.html` to be processed (the `custom.html` is below):
 
 ```html
 <!doctype html>
@@ -250,9 +278,27 @@ when not being processed, is a perfectly valid title string -->
 /build -->
 ```
 
+The `custom.html` to be processed:
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Custom template delimiters example</title>
+  </head>
+
+  <body>
+    <!-- build:template
+    {{= message }}
+    /build -->
+  </body)>
+</html>
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.2.1 Added `templateSettings` option tu customize template delimiters
+- 0.2.0 Added the `build:include` feature to include any external file
 - 0.1.1 Lint js files inside tasks/lib/
 - 0.1.0 Initial release

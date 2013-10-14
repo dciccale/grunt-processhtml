@@ -30,8 +30,16 @@ module.exports = ->
             title: "My app"
             message: "This is dist target"
 
+      custom:
+        options:
+          templateSettings:
+            opener: '{{'
+            closer: '}}'
+          data:
+            message: "This has custom delimiters for the template"
+
         files:
-          "test/fixtures/dist/index.processed.html": ["test/fixtures/index.html"]
+          "test/fixtures/custom/custom.processed.html": ["test/fixtures/custom.html"]
 
     nodeunit:
       tests: ["test/*_test.js"]
