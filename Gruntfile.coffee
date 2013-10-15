@@ -1,5 +1,6 @@
 # grunt-processhtml
 # https://github.com/dciccale/grunt-processhtml
+#
 # Copyright (c) 2013 Denis Ciccale (@tdecs)
 # Licensed under the MIT license.
 # https://github.com/dciccale/grunt-processhtml/blob/master/LICENSE-MIT
@@ -30,6 +31,9 @@ module.exports = ->
             title: "My app"
             message: "This is dist target"
 
+        files:
+          "test/fixtures/dist/index.processed.html": ["test/fixtures/index.html"]
+
       custom:
         options:
           templateSettings:
@@ -50,5 +54,4 @@ module.exports = ->
   @loadNpmTasks "grunt-contrib-nodeunit"
 
   @registerTask "test", ["processhtml", "nodeunit"]
-
   @registerTask "default", ["jshint", "test"]

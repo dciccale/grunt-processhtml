@@ -1,70 +1,67 @@
+/*
+ * grunt-processhtml
+ * https://github.com/dciccale/grunt-processhtml
+ *
+ * Copyright (c) 2013 Denis Ciccale (@tdecs)
+ * Licensed under the MIT license.
+ * https://github.com/dciccale/grunt-processhtml/blob/master/LICENSE-MIT
+ */
+
 'use strict';
 
+var grunt = require('grunt');
 var path = require('path');
-var fs = require('fs');
+var utils = require('./utils');
 
-exports.init = function (grunt) {
-  var utils = require('./utils').init(grunt);
-  var _ = grunt.util._;
-  var _options, _filePath;
+var getBlocks = function (content) {
+  /*
+   * <!-- build:<type>[:target] [value] -->
+   * - type (required) js, css, href, remove, template
+   * - target|attribute i.e. dev, release or [href] [src]
+   * - value (optional) i.e. script.min.js
+  */
+  var regbuild = /<!--\s*build:(\[?\w+\]?)(?::(\w+))?(?:\s*([^\s]+)\s*-->)*/;
+  // <!-- /build -->
+  var regend = /(?:<!--\s*)*\/build\s*-->/;
+  // normalize line endings and split in lines
+  var lines = content.replace(/\r\n/g, '\n').split(/\n/);
+  var inside = false;
+  var sections = [];
+  var block;
 
-  var getBlocks = function (content) {
-    /*
-     * <!-- build:<type>[:target] [value] -->
-     * - type (required) js, css, href, remove, template
-     * - target|attribute i.e. dev, release or [href] [src]
-     * - value (optional) i.e. script.min.js
-    */
-    var regbuild = /<!--\s*build:(\[?\w+\]?)(?::(\w+))?(?:\s*([^\s]+)\s*-->)*/;
-    // <!-- /build -->
-    var regend = /(?:<!--\s*)*\/build\s*-->/;
-    // normalize line endings and split in lines
-    var lines = content.replace(/\r\n/g, '\n').split(/\n/);
-    var inside = false;
-    var sections = [];
-    var block;
+  lines.forEach(function (line) {
+    var build = line.match(regbuild);
+    var endbuild = regend.test(line);
+    var attr;
 
-    lines.forEach(function (l) {
-      var build = l.match(regbuild);
-      var endbuild = regend.test(l);
-      var attr;
+    if (build) {
+      inside = true;
+      attr = build[1].match(/(?:\[(\w+)\])*/)[1];
+      block = {
+        type: attr ? 'attr': build[1],
+        attr: attr,
+        target: build[2],
+        asset: build[3],
+        indent: /^\s*/.exec(line)[0],
+        raw: []
+      };
+    }
 
-      if (build) {
-        inside = true;
-        attr = build[1].match(/(?:\[(\w+)\])*/)[1];
-        block = {
-          type: attr ? 'attr': build[1],
-          attr: attr,
-          target: build[2],
-          asset: build[3],
-          indent: /^\s*/.exec(l)[0],
-          raw: []
-        };
-      }
+    if (inside && block) {
+      block.raw.push(line);
+    }
 
-      if (inside && block) {
-        block.raw.push(l);
-      }
+    if (inside && endbuild) {
+      inside = false;
+      sections.push(block);
+    }
+  });
 
-      if (inside && endbuild) {
-        inside = false;
-        sections.push(block);
-      }
-    });
+  return sections;
+};
 
-    return sections;
-  };
-
-  var HTMLProcessor = function (content, options, filePath) {
-    this.content = content;
-    _options = options || {};
-    _filePath = filePath || '';
-    this.target = _options.data.environment;
-    this.linefeed = /\r\n/g.test(content) ? '\r\n' : '\n';
-    this.blocks = getBlocks(content);
-  };
-
-  var _blockTypes = {
+var getBlockTypes = function (options, filePath) {
+  return {
     replaceAsset: function (content, block, blockLine, asset) {
       return content.replace(blockLine, block.indent + asset);
     },
@@ -85,7 +82,6 @@ exports.init = function (grunt) {
         asset = !path.extname(block.asset) ? block.asset + path.basename(asset) : block.asset;
         return start + asset + end;
       });
-
       return content.replace(blockLine, replacedBlock);
     },
 
@@ -95,47 +91,48 @@ exports.init = function (grunt) {
     },
 
     template: function (content, block, blockLine, blockContent) {
-      var compiledTmpl = utils.template(blockContent, _options);
+      var compiledTmpl = utils.template(blockContent, options);
       // clean template output and fix indent
-      compiledTmpl = block.indent + _.trim(compiledTmpl).replace(/([\r\n])\s*/g, '$1' + block.indent);
+      compiledTmpl = block.indent + grunt.util._.trim(compiledTmpl).replace(/([\r\n])\s*/g, '$1' + block.indent);
       return content.replace(blockLine, compiledTmpl);
     },
 
     include: function (content, block, blockLine, blockContent) {
-      var filePath = path.join(path.dirname(_filePath), block.asset);
+      var filepath = path.join(path.dirname(filePath), block.asset);
       var fileContent;
-      if (fs.existsSync(filePath)) {
-        fileContent = block.indent + fs.readFileSync(filePath);
+      if (grunt.file.exists(filepath)) {
+        fileContent = block.indent + grunt.file.read(filepath);
         content = content.replace(blockLine, fileContent);
       }
       return content;
     }
   };
+};
 
-  HTMLProcessor.prototype._getReplacer = function (block) {
-    var blockLine = block.raw.join(this.linefeed);
-    var blockContent = block.raw.slice(1, -1).join(this.linefeed);
-    var replacer = function (content) {
-      return _blockTypes[block.type](content, block, blockLine, blockContent);
-    };
+var HTMLProcessor = module.exports = function (content, options, filePath) {
+  this.content = content;
+  this.target = options.data.environment;
+  this.linefeed = /\r\n/g.test(content) ? '\r\n' : '\n';
+  this.blocks = getBlocks(content);
+  this.blockTypes = getBlockTypes(options, filePath);
+};
 
-    return {
-      replace: replacer
-    };
-  };
+HTMLProcessor.prototype._replace = function (block, content) {
+  var blockLine = block.raw.join(this.linefeed);
+  var blockContent = block.raw.slice(1, -1).join(this.linefeed);
+  var result = this.blockTypes[block.type](content, block, blockLine, blockContent);
+  return result;
+};
 
-  HTMLProcessor.prototype.process = function () {
-    var result = this.content;
+HTMLProcessor.prototype.process = function () {
+  var result = this.content;
 
-    _.each(this.blocks, function (block) {
-      // parse through correct block type also checking the build target
-      if (_blockTypes[block.type] && (!block.target || block.target === this.target)) {
-        result = this._getReplacer(block).replace(result);
-      }
-    }, this);
+  grunt.util._.each(this.blocks, function (block) {
+    // parse through correct block type also checking the build target
+    if (this.blockTypes[block.type] && (!block.target || block.target === this.target)) {
+      result = this._replace(block, result);
+    }
+  }, this);
 
-    return result;
-  };
-
-  return HTMLProcessor;
+  return result;
 };

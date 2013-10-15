@@ -11,12 +11,11 @@
 
 module.exports = function (grunt) {
 
-  var utils = require('./lib/utils').init(grunt);
-  var HTMLProcessor = require('./lib/htmlprocessor').init(grunt);
+  var utils = require('./lib/utils');
+  var HTMLProcessor = require('./lib/htmlprocessor');
 
   grunt.registerMultiTask('processhtml', 'Process html files at build time to modify them depending on the release environment', function () {
     var options = this.options({
-      // process the whole file with data object when html processor finishes
       process: false,
       data: {},
       templateSettings: null
