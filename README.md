@@ -27,11 +27,11 @@ Process `html` files with special comments:
 <!-- /build -->
 ```
 
-##### type 
+##### type
 This is required.
 
 Types: `js`, `css`, `remove`, `template` or `include`. or any html attribute if written like this: `[href]`, `[src]`, etc.
-  
+
 ##### target
 This is optional.
 
@@ -407,6 +407,7 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.2.2 Small code refactor
 - 0.2.1 Added `templateSettings` option tu customize template delimiters
 - 0.2.0 Added the `build:include` feature to include any external file
 - 0.1.1 Lint js files inside tasks/lib/
