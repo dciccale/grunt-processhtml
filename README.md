@@ -399,7 +399,7 @@ The `custom.html` to be processed:
     <!-- build:template
     {{= message }}
     /build -->
-  </body)>
+  </body>
 </html>
 ```
 
