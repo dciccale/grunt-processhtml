@@ -27,48 +27,131 @@ Process `html` files with special comments:
 <!-- /build -->
 ```
 
-- type (required) is one of: `js`, `css`, `remove`, `template` or `include`. or any html attribute if written like this: `[href]`, `[src]`,
-  etc.
-- target (optional) is the target name of your grunt task, for example: `dist`. Is supported for all types, so you can
-  always specify the target if needed.
-- value (optional) could be: `script.min.js` or a path if an attribute like `[src]` is specified to keep the original src
-  filename intact but replace its path.
+##### type 
+This is required.
+
+Types: `js`, `css`, `remove`, `template` or `include`. or any html attribute if written like this: `[href]`, `[src]`, etc.
+  
+##### target
+This is optional.
+
+Is the target name of your grunt task, for example: `dist`. Is supported for all types, so you can always specify the target if needed.
+
+##### value
+Required for types: `js`, `css`, `include` and `[attr]`.
+
+Optional for types: `remove`, `template`.
+
+Could be a file name: `script.min.js` or a path if an attribute like `[src]` is specified to keep the original file name intact but replace its path.
 
 ### Simple examples
 
+##### `build:js[:target] <value>`
+
+Replace many script tags into one.
+
+`[:target]` Optional build target.
+
+`<value>` Required value: A file path.
+
 ```html
-<!--
-Change only the path of the src attribute and keep the original src filename.
-This will replace the src path of many script tags if inside the build comment block.
--->
+<!-- build:js app.min.js -->
+<script src="my/lib/path/lib.js"></script>
+<script src="my/deep/development/path/script.js"></script>
+<!-- /build -->
+
+<!-- changeg to -->
+<script src="app.min.js"></script>
+```
+
+##### `build:css[:target] <value>`
+
+Replace many stylesheet link tags into one.
+
+`[:target]` Optional build target.
+
+`<value>` Required value: A file path.
+
+```html
+<!-- build:css style.min.css -->
+<link rel="stylesheet" href="path/to/normalize.css">
+<link rel="stylesheet" href="path/to/main.css">
+<!-- /build -->
+
+<!-- changed to -->
+<link rel="stylesheet" href="style.min.css">
+```
+
+##### `build:<[attr]>[:target] <value>`
+
+Change the value of an attribute. In most cases using `[src]` and `[href]` will be enough but it works with any html attribute.
+
+`<[attr]>` Required html attribute, i.e. `[src]`, `[href]`.
+
+`[:target]` Optional build target.
+
+`<value>` Required value: A path or a file path.
+
+```html
+<!-- If only a path is used, the original file name will remain -->
 
 <!-- build:[src] js/ -->
 <script src="my/lib/path/lib.js"></script>
 <script src="my/deep/development/path/script.js"></script>
 <!-- /build -->
-<!-- this will change only the path to -->
+
+<!-- changed the src attribute path -->
 <script src="js/lib.js"></script>
 <script src="js/script.js"></script>
 
-<!-- build:css style.min.css -->
-<link rel="stylesheet" href="path/to/normalize.css">
-<link rel="stylesheet" href="path/to/main.css">
-<!-- /build -->
-<!-- when any process done will change to -->
-<link rel="stylesheet" href="style.min.css">
-
-<!-- build:remove -->
-<p>This will be removed when any process is done</p>
+<!-- build:[href] img/ -->
+<link rel="apple-touch-icon-precomposed" href="skins/demo/img/icon.png">
+<link rel="apple-touch-icon-precomposed" href="skins/demo/img/icon-72x72.png" sizes="72x72">
 <!-- /build -->
 
-<!-- build:remove:dist -->
-<p>But this one only when doing processhtml:dist</p>
+<!-- changed the href attribute path -->
+<link rel="apple-touch-icon-precomposed" href="img/icon.png">
+<link rel="apple-touch-icon-precomposed" href="img/icon-72x72.png" sizes="72x72">
+
+<!-- build:[class]:dist production -->
+<html class="debug_mode">
 <!-- /build -->
 
+<!-- this will change the class to 'production' only when de 'dist' build is executed -->
+<html class="production">
+
+```
+
+##### `build:include[:target] <value>`
+
+Include an external file.
+
+`[:target]` Optional build target.
+
+`<value>` Required value: A file path.
+
+```html
 <!-- build:include header.html -->
 This will be replaced by the content of header.html
 <!-- /build -->
 
+<!-- build:include:dev dev/content.html -->
+This will be replaced by the content of dev/header.html
+<!-- /build -->
+
+<!-- build:include:dist dist/content.html -->
+This will be replaced by the content of dist/content.html
+<!-- /build -->
+```
+
+##### `build:template[:target]`
+
+Process a template block with a data object inside [options.data](#optionsdata).
+
+`[:target]` Optional build target.
+
+
+```html
 <!-- build:template
 <p>Hello, <%= name %></p>
 /build -->
@@ -77,6 +160,22 @@ This will be replaced by the content of header.html
 notice that the template block is commented
 to prevent breaking the html file and keeping it functional
 -->
+```
+
+##### `build:remove[:target]`
+
+Remove a block.
+
+`[:target]` Optional build target
+
+```html
+<!-- build:remove -->
+<p>This will be removed when any processhtml target is done</p>
+<!-- /build -->
+
+<!-- build:remove:dist -->
+<p>But this one only when doing processhtml:dist target</p>
+<!-- /build -->
 ```
 
 ### Overview
