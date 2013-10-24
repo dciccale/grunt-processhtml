@@ -33,7 +33,11 @@
     /build -->
 
     <!-- build:js:dist app.min.js -->
-    <script src="js/libs/require/require-2.1.1.dev.js" data-main="js/config.js"></script>
+    <script src="js/libs/require/require-2.1.1.js" data-main="js/config.js"></script>
+    <!-- /build -->
+
+    <!-- build:[data-main] app/js/ -->
+    <script src="require.js" data-main="js/config.js"></script>
     <!-- /build -->
 
   </body>

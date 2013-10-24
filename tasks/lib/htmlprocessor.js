@@ -20,7 +20,7 @@ var getBlocks = function (content) {
    * - target|attribute i.e. dev, release or [href] [src]
    * - value (optional) i.e. script.min.js
   */
-  var regbuild = /<!--\s*build:(\[?\w+\]?)(?::(\w+))?(?:\s*([^\s]+)\s*-->)*/;
+  var regbuild = /<!--\s*build:(\[?[\w-]+\]?)(?::(\w+))?(?:\s*([^\s]+)\s*-->)*/;
   // <!-- /build -->
   var regend = /(?:<!--\s*)*\/build\s*-->/;
   // normalize line endings and split in lines
@@ -36,7 +36,7 @@ var getBlocks = function (content) {
 
     if (build) {
       inside = true;
-      attr = build[1].match(/(?:\[(\w+)\])*/)[1];
+      attr = build[1].match(/(?:\[([\w-]+)\])*/)[1];
       block = {
         type: attr ? 'attr': build[1],
         attr: attr,
