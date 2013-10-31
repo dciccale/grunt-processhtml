@@ -60,7 +60,7 @@ Replace many script tags into one.
 <script src="my/deep/development/path/script.js"></script>
 <!-- /build -->
 
-<!-- changeg to -->
+<!-- changed to -->
 <script src="app.min.js"></script>
 ```
 
@@ -358,7 +358,7 @@ The `index.html` to be processed (the `custom.html` is below):
 <!doctype html>
 <!-- notice that no special comment is used here, as process is true.
 if you don't mind having <%= title %> as the title of your app
-when not being processed, is a perfectly valid title string -->
+when not being processed; is a perfectly valid title string -->
 <title><%= title %></title>
 
 <!-- build:css style.min.css -->
