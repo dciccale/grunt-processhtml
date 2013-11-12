@@ -79,7 +79,7 @@ var getBlockTypes = function (options, filePath) {
       var re = new RegExp('(\\s*(?:' + block.attr + ')=[\'"])(.*)?(".*)', 'gi');
       var replacedBlock = blockContent.replace(re, function (wholeMatch, start, asset, end) {
         // check if only the path was provided to leave the original asset name intact
-        asset = !path.extname(block.asset) ? block.asset + path.basename(asset) : block.asset;
+        asset = (!path.extname(block.asset) && /\//.test(block.asset))? block.asset + path.basename(asset) : block.asset;
         return start + asset + end;
       });
       return content.replace(blockLine, replacedBlock);
