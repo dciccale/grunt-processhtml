@@ -136,7 +136,7 @@ This will be replaced by the content of header.html
 <!-- /build -->
 
 <!-- build:include:dev dev/content.html -->
-This will be replaced by the content of dev/header.html
+This will be replaced by the content of dev/content.html
 <!-- /build -->
 
 <!-- build:include:dist dist/content.html -->
