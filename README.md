@@ -231,6 +231,12 @@ templateSettings: {
 }
 ```
 
+#### options.includeBase
+Type: `String`
+Default value: `null` (Will use the path of the including file)
+
+Specify an optional path to look for include files. ie, `app/assets/includes/`
+
 ### Usage Examples
 
 #### Default Options
