@@ -98,7 +98,8 @@ var getBlockTypes = function (options, filePath) {
     },
 
     include: function (content, block, blockLine, blockContent) {
-      var filepath = path.join(path.dirname(filePath), block.asset);
+      var base = options.includeBase || path.dirname(filePath);
+      var filepath = path.join(base, block.asset);
       var fileContent;
       if (grunt.file.exists(filepath)) {
         fileContent = block.indent + grunt.file.read(filepath);
