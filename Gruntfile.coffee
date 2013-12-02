@@ -52,6 +52,7 @@ module.exports = ->
 
   @loadNpmTasks "grunt-contrib-jshint"
   @loadNpmTasks "grunt-contrib-nodeunit"
+  @loadNpmTasks "grunt-release"
 
   @registerTask "test", ["processhtml", "nodeunit"]
   @registerTask "default", ["jshint", "test"]
