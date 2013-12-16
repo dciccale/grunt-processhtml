@@ -18,7 +18,8 @@ module.exports = function (grunt) {
     var options = this.options({
       process: false,
       data: {},
-      templateSettings: null
+      templateSettings: null,
+      commentMarker: 'build'
     });
 
     // extend template data

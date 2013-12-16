@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><%= title %></title>
+
+    <!-- process:[href] img/ -->
+    <link rel="apple-touch-icon-precomposed" href="path/to/my/theme/img/apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="path/to/my/theme/img/apple-touch-icon-72x72-precomposed.png" sizes="72x72">
+    <link rel="apple-touch-icon-precomposed" href="path/to/my/theme/img/apple-touch-icon-114x114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon-precomposed" href="path/to/my/theme/img/apple-touch-icon-144x144-precomposed.png" sizes="144x144">
+    <!-- /process -->
+
+    <!-- process:template
+    <% if (environment === 'marker') { %>
+      <link rel="stylesheet" href="style.css">
+    <% } else if (environment === 'dist') { %>
+      <link rel="stylesheet" href="style.min.css">
+    <% } %>
+    /process -->
+  </head>
+  <body>
+
+    <!-- process:include header_include.html --><!-- /process -->
+
+    <!-- process:remove -->
+    <p>This should be removed after build</p>
+    <!-- /process -->
+
+    <!-- process:template
+    <p><%= message %></p>
+    /process -->
+
+    <!-- process:js:dist app.min.js -->
+    <script src="js/libs/require/require-2.1.1.js" data-main="js/config.js"></script>
+    <!-- /process -->
+
+    <!-- process:js:marker foo.bar.js -->
+    <script src="js/libs/foo/bar.js"></script>
+    <!-- /process -->
+
+    <!-- process:[data-main] app/js/ -->
+    <script src="require.js" data-main="js/config.js"></script>
+    <!-- /process -->
+
+    <!-- process:[data-main] src/js/ -->
+    <script data-main="js/config.js" src="require.js"></script>
+    <!-- /process -->
+
+  </body>
+</html>

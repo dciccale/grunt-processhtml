@@ -13,16 +13,16 @@ var grunt = require('grunt');
 var path = require('path');
 var utils = require('./utils');
 
-var getBlocks = function (content) {
+var getBlocks = function (content, marker) {
   /*
    * <!-- build:<type>[:target] [value] -->
    * - type (required) js, css, href, remove, template
    * - target|attribute i.e. dev, release or [href] [src]
    * - value (optional) i.e. script.min.js
   */
-  var regbuild = /<!--\s*build:(\[?[\w-]+\]?)(?::(\w+))?(?:\s*([^\s]+)\s*-->)*/;
+  var regbuild = new RegExp('<!--\\s*' + marker + ':(\\[?[\\w-]+\\]?)(?::(\\w+))?(?:\\s*([^\\s]+)\\s*-->)*');
   // <!-- /build -->
-  var regend = /(?:<!--\s*)*\/build\s*-->/;
+  var regend = new RegExp('(?:<!--\\s*)*\\/' + marker + '\\s*-->');
   // normalize line endings and split in lines
   var lines = content.replace(/\r\n/g, '\n').split(/\n/);
   var inside = false;
@@ -114,7 +114,7 @@ var HTMLProcessor = module.exports = function (content, options, filePath) {
   this.content = content;
   this.target = options.data.environment;
   this.linefeed = /\r\n/g.test(content) ? '\r\n' : '\n';
-  this.blocks = getBlocks(content);
+  this.blocks = getBlocks(content, options.commentMarker);
   this.blockTypes = getBlockTypes(options, filePath);
 };
 
