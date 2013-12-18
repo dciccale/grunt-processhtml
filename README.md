@@ -237,6 +237,22 @@ Default value: `null` (Will use the path of the including file)
 
 Specify an optional path to look for include files. ie, `app/assets/includes/`
 
+#### options.commentMarker
+Type: `String`
+Default value: `build`
+
+Specify the word used to indicate the special begin/end comments.  This is useful if you want to use this plugin
+in conjuction with other plugins that use a similar, conflicting `build:<type>` comment
+(such as [grunt-usemin](https://github.com/yeoman/grunt-usemin)).
+
+With `options.commentMarker` set to `process`, a typical comment would look like:
+
+```html
+<!-- process:<type>[:target] [value] -->
+...
+<!-- /process -->
+```
+
 ### Usage Examples
 
 #### Default Options

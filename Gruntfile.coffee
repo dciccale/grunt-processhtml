@@ -44,6 +44,15 @@ module.exports = ->
 
         files:
           "test/fixtures/custom/custom.processed.html": ["test/fixtures/custom.html"]
+          
+      marker:
+        options:
+          commentMarker: 'process'
+          data:
+            message: "This uses a custom comment marker"
+          
+        files:
+          "test/fixtures/commentMarker/commentMarker.processed.html": ["test/fixtures/commentMarker.html"]
 
     nodeunit:
       tests: ["test/*_test.js"]

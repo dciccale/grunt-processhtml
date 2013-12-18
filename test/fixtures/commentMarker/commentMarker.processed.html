@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><%= title %></title>
+
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-72x72-precomposed.png" sizes="72x72">
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-114x114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-144x144-precomposed.png" sizes="144x144">
+
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <h1>Header include</h1>
+
+    <p>This uses a custom comment marker</p>
+
+    <!-- process:js:dist app.min.js -->
+    <script src="js/libs/require/require-2.1.1.js" data-main="js/config.js"></script>
+    <!-- /process -->
+
+    <script src="foo.bar.js"></script>
+
+    <script src="require.js" data-main="app/js/config.js"></script>
+
+    <script data-main="src/js/config.js" src="require.js"></script>
+
+  </body>
+</html>

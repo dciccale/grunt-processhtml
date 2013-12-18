@@ -31,5 +31,16 @@ exports.processhtml = {
     test.equal(actual, expected, 'should be able to process a template with custom delimiters');
 
     test.done();
+  },
+  
+  marker: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/commentMarker/commentMarker.processed.html');
+    var expected = grunt.file.read('test/expected/commentMarker/commentMarker.html');
+    test.equal(actual, expected, 'should process and output an html file as defined by the build special comments for marker target');
+
+    test.done();
   }
+  
 };
