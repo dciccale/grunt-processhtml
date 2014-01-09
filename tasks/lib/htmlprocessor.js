@@ -40,7 +40,7 @@ var getBlocks = function (content, marker) {
       block = {
         type: attr ? 'attr': build[1],
         attr: attr,
-        targets: build[2].split(','),
+        targets: !!build[2] ? build[2].split(',') : null,
         asset: build[3],
         indent: /^\s*/.exec(line)[0],
         raw: []
@@ -108,10 +108,10 @@ var getBlockTypes = function (options, filePath) {
       return content;
     },
 
-	  _strip: function (content, block, blockLine, blockContent) {
-		  var blockRegExp = utils.blockToRegExp(blockLine);
-		  return content.replace(blockRegExp, '\n' + blockContent);
-	  }
+    _strip: function (content, block, blockLine, blockContent) {
+        var blockRegExp = utils.blockToRegExp(blockLine);
+        return content.replace(blockRegExp, '\n' + blockContent);
+    }
   };
 };
 
@@ -139,8 +139,8 @@ HTMLProcessor.prototype.process = function () {
     if (this.blockTypes[block.type] && (!block.targets || grunt.util._.indexOf(block.targets, this.target) >= 0)) {
       result = this._replace(block, result);
     } else if (this.stripUnparsed) {
-	    block.type = '_strip';
-	    result = this._replace(block, result);
+    	block.type = '_strip';
+	result = this._replace(block, result);
     }
   }, this);
 
