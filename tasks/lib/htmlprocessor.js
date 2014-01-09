@@ -78,8 +78,19 @@ var getBlockTypes = function (options, filePath) {
       // only run attr replacer for the block content
       var re = new RegExp('(\\s*(?:' + block.attr + ')=[\'"])(.*)?(".*)', 'gi');
       var replacedBlock = blockContent.replace(re, function (wholeMatch, start, asset, end) {
+        // Allows smart replacement ({dir}, {name}, {ext})
+        var fileReg = /\{(dir|name|ext)\}/g;
+        var assetObj = {
+          dir: path.dirname(asset),
+          name: path.basename(asset).split(".")[0],
+          ext: path.extname(asset)
+        };
+        var newAsset = block.asset.replace(fileReg,function(match, filePart){
+          return assetObj[filePart];
+        });
+        
         // check if only the path was provided to leave the original asset name intact
-        asset = (!path.extname(block.asset) && /\//.test(block.asset))? block.asset + path.basename(asset) : block.asset;
+        asset = (!path.extname(newAsset) && /\//.test(newAsset))? newAsset + path.basename(asset) : newAsset;
         return start + asset + end;
       });
       return content.replace(blockLine, replacedBlock);
