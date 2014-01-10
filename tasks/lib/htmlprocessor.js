@@ -40,7 +40,7 @@ var getBlocks = function (content, marker) {
       block = {
         type: attr ? 'attr': build[1],
         attr: attr,
-        targets: !!build[2] ? build[2].split(',') : null,
+        targets: build[2].split(','),
         asset: build[3],
         indent: /^\s*/.exec(line)[0],
         raw: []
@@ -106,11 +106,6 @@ var getBlockTypes = function (options, filePath) {
         content = content.replace(blockLine, fileContent);
       }
       return content;
-    },
-
-    _strip: function (content, block, blockLine, blockContent) {
-        var blockRegExp = utils.blockToRegExp(blockLine);
-        return content.replace(blockRegExp, '\n' + blockContent);
     }
   };
 };
@@ -131,6 +126,14 @@ HTMLProcessor.prototype._replace = function (block, content) {
   return result;
 };
 
+HTMLProcessor.prototype._strip = function (block, content) {
+  var blockLine = block.raw.join(this.linefeed);
+  var blockRegExp = utils.blockToRegExp(blockLine);
+  var blockContent = block.raw.slice(1, -1).join(this.linefeed);
+  var result = content.replace(blockRegExp, '\n' + blockContent);
+  return result;
+};
+
 HTMLProcessor.prototype.process = function () {
   var result = this.content;
 
@@ -139,8 +142,7 @@ HTMLProcessor.prototype.process = function () {
     if (this.blockTypes[block.type] && (!block.targets || grunt.util._.indexOf(block.targets, this.target) >= 0)) {
       result = this._replace(block, result);
     } else if (this.stripUnparsed) {
-    	block.type = '_strip';
-	result = this._replace(block, result);
+      result = this._strip(block, result);
     }
   }, this);
 
