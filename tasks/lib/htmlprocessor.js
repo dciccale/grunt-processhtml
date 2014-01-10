@@ -40,7 +40,7 @@ var getBlocks = function (content, marker) {
       block = {
         type: attr ? 'attr': build[1],
         attr: attr,
-        targets: build[2].split(','),
+        targets: !!build[2] ? build[2].split(',') : null,
         asset: build[3],
         indent: /^\s*/.exec(line)[0],
         raw: []
