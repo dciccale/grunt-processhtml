@@ -106,7 +106,55 @@ var getBlockTypes = function (options, filePath) {
         content = content.replace(blockLine, fileContent);
       }
       return content;
-    }
+    },
+
+    jslist: function (content, block, blockLine, blockContent) {
+      var blockRegExp = utils.blockToRegExp(blockLine);
+      var lines = blockLine.split(/\n/);
+      var replacedBlock = '\n\n';
+      var comment = new RegExp('<!--\\s*');
+
+      for (var i = 0; i < lines.length - 1; i++) {
+         if (lines[i].toString().match(comment)) {
+            replacedBlock += lines[i];
+         }
+      }
+
+      replacedBlock += '\n';
+
+      grunt.file.recurse(block.asset, function callback(abspath, rootdir, subdir, filename) {
+        if (filename.toString().match(/\.js$/)) {
+          replacedBlock += '<script src="' + abspath.toString().replace(block.asset, '') + '"><\/script>\n';
+        }
+      });
+
+      replacedBlock += lines[lines.length - 1];
+      return content.replace(blockRegExp,replacedBlock);
+    },
+
+    csslist: function (content, block, blockLine, blockContent) {
+      var blockRegExp = utils.blockToRegExp(blockLine);
+      var lines = blockLine.split(/\n/);
+      var replacedBlock = '\n\n';
+      var comment = new RegExp('<!--\\s*');
+
+       for (var i = 0; i < lines.length - 1; i++) {
+          if (lines[i].toString().match(comment)) {
+            replacedBlock += lines[i];
+          }
+       }
+
+       replacedBlock += '\n';
+
+       grunt.file.recurse(block.asset, function callback(abspath, rootdir, subdir, filename) {
+          if (filename.toString().match(/\.css/)) {
+            replacedBlock += '<link rel="stylesheet" href="' + abspath.toString().replace(block.asset, '') + '">\n';
+          }
+       });
+
+       replacedBlock += lines[lines.length - 1];
+       return content.replace(blockRegExp,replacedBlock);
+      }
   };
 };
 
