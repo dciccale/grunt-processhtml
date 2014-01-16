@@ -99,8 +99,8 @@ Replace many stylesheet link tags into one.
 
 <!-- changed to -->
 <link rel="stylesheet" href="style.min.css">
-``
-`
+```
+
 ##### `build:csslist[:target] <value>`
 
 Recursively scans a directory and subdirectories for css files and adds them as script tags.  This task keeps the original comments so that the html file can be used live without needing a template.
