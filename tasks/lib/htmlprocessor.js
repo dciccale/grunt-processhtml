@@ -112,10 +112,15 @@ var getBlockTypes = function (options, filePath) {
       var blockRegExp = utils.blockToRegExp(blockLine);
       var lines = blockLine.split(/\n/);
       var replacedBlock = '\n\n';
-      var i = 0;
+      var comment = new RegExp('<!--\\s*');
 
-      for (; i < lines.length - 1; i++)
-        replacedBlock += lines[i];
+      for (var i = 0; i < lines.length - 1; i++) {
+         if (lines[i].toString().match(comment)) {
+            replacedBlock += lines[i];
+         }
+      }
+
+      replacedBlock += '\n';
 
       grunt.file.recurse(block.asset, function callback(abspath, rootdir, subdir, filename) {
         if (filename.toString().match(/\.js$/)) {
@@ -123,7 +128,7 @@ var getBlockTypes = function (options, filePath) {
         }
       });
 
-      replacedBlock += lines[i];
+      replacedBlock += lines[lines.length - 1];
       return content.replace(blockRegExp,replacedBlock);
     },
 
@@ -131,20 +136,25 @@ var getBlockTypes = function (options, filePath) {
       var blockRegExp = utils.blockToRegExp(blockLine);
       var lines = blockLine.split(/\n/);
       var replacedBlock = '\n\n';
-      var i = 0;
+      var comment = new RegExp('<!--\\s*');
 
-      for (; i < lines.length - 1; i++)
-        replacedBlock += lines[i];
+       for (var i = 0; i < lines.length - 1; i++) {
+          if (lines[i].toString().match(comment)) {
+            replacedBlock += lines[i];
+          }
+       }
 
-      grunt.file.recurse(block.asset, function callback(abspath, rootdir, subdir, filename) {
-        if (filename.toString().match(/\.css/)) {
-          replacedBlock += '<link rel="stylesheet" href="' + abspath.toString().replace(block.asset, '') + '">\n';
-        }
-      });
+       replacedBlock += '\n';
 
-      replacedBlock += lines[i];
-      return content.replace(blockRegExp,replacedBlock);
-    }
+       grunt.file.recurse(block.asset, function callback(abspath, rootdir, subdir, filename) {
+          if (filename.toString().match(/\.css/)) {
+            replacedBlock += '<link rel="stylesheet" href="' + abspath.toString().replace(block.asset, '') + '">\n';
+          }
+       });
+
+       replacedBlock += lines[lines.length - 1];
+       return content.replace(blockRegExp,replacedBlock);
+      }
   };
 };
 
