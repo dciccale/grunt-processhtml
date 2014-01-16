@@ -30,7 +30,7 @@ Process `html` files with special comments:
 ##### type
 This is required.
 
-Types: `js`, `css`, `remove`, `template` or `include`. or any html attribute if written like this: `[href]`, `[src]`, etc.
+Types: `js`, `jslist`, `css`, `csslist`, `remove`, `template` or `include`. or any html attribute if written like this: `[href]`, `[src]`, etc.
 
 ##### target
 This is optional.
@@ -64,6 +64,25 @@ Replace many script tags into one.
 <script src="app.min.js"></script>
 ```
 
+##### `build:jslist[:target] <value>`
+
+Recursively scans a directory and subdirectories for javascript files and adds them as script tags.  This task keeps the original comments so that the html file can be used live without needing a template.
+
+`[:target]` Optional build target.
+
+`<value>` Required value: A directory to recursively search for Javascript files to source
+
+```html
+<!-- build:jslist src/ -->
+<!-- /build -->
+
+<!-- changed to -->
+<!-- build:jslist src/ -->
+<script src="myapp/app.js"></script>
+<script src="myapp/controllers/controllers.js"></script>
+<!-- /build -->
+```
+
 ##### `build:css[:target] <value>`
 
 Replace many stylesheet link tags into one.
@@ -80,6 +99,25 @@ Replace many stylesheet link tags into one.
 
 <!-- changed to -->
 <link rel="stylesheet" href="style.min.css">
+``
+`
+##### `build:csslist[:target] <value>`
+
+Recursively scans a directory and subdirectories for css files and adds them as script tags.  This task keeps the original comments so that the html file can be used live without needing a template.
+
+`[:target]` Optional build target.
+
+`<value>` Required value: A directory to recursively search for CSS files to link
+
+```html
+<!-- build:csslist src/ -->
+<!-- /build -->
+
+<!-- changed to -->
+<!-- build:csslist src/ -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/blocks.css">
+<!-- /build -->
 ```
 
 ##### `build:<[attr]>[:target] <value>`
