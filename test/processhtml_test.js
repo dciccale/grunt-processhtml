@@ -51,6 +51,24 @@ exports.processhtml = {
 		test.equal(actual, expected, 'should remove build comments for non-targets');
 
 		test.done();
+	},
+
+	multiple: function(test) {
+		test.expect(3);
+
+		var actual = grunt.file.read('test/fixtures/multiple/mult_one.processed.html');
+		var expected = grunt.file.read('test/expected/multiple/mult_one.html');
+		test.equal(actual, expected, 'parse comment block defining multiple targets (1)');
+
+		actual = grunt.file.read('test/fixtures/multiple/mult_two.processed.html');
+		expected = grunt.file.read('test/expected/multiple/mult_two.html');
+		test.equal(actual, expected, 'parse comment block defining multiple targets (2)');
+
+		actual = grunt.file.read('test/fixtures/multiple/mult_three.processed.html');
+		expected = grunt.file.read('test/expected/multiple/mult_three.html');
+		test.equal(actual, expected, 'parse comment block defining multiple targets (3)');
+
+		test.done();
 	}
   
 };
