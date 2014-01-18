@@ -54,6 +54,13 @@ module.exports = ->
         files:
           "test/fixtures/commentMarker/commentMarker.processed.html": ["test/fixtures/commentMarker.html"]
 
+      strip:
+        options:
+          strip: true
+
+        files:
+          "test/fixtures/strip/strip.processed.html": ["test/fixtures/strip.html"]
+
     nodeunit:
       tests: ["test/*_test.js"]
 

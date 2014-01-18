@@ -116,7 +116,7 @@ var HTMLProcessor = module.exports = function (content, options, filePath) {
   this.linefeed = /\r\n/g.test(content) ? '\r\n' : '\n';
   this.blocks = getBlocks(content, options.commentMarker);
   this.blockTypes = getBlockTypes(options, filePath);
-	this.stripUnparsed = options.stripUnparsed === true;
+	this.strip = options.strip === true;
 };
 
 HTMLProcessor.prototype._replace = function (block, content) {
@@ -129,8 +129,9 @@ HTMLProcessor.prototype._replace = function (block, content) {
 HTMLProcessor.prototype._strip = function (block, content) {
   var blockLine = block.raw.join(this.linefeed);
   var blockRegExp = utils.blockToRegExp(blockLine);
+	console.log(blockRegExp);
   var blockContent = block.raw.slice(1, -1).join(this.linefeed);
-  var result = content.replace(blockRegExp, '\n' + blockContent);
+  var result = content.replace(blockRegExp, '\n\n' + blockContent);
   return result;
 };
 
@@ -141,7 +142,7 @@ HTMLProcessor.prototype.process = function () {
     // parse through correct block type also checking the build target
     if (this.blockTypes[block.type] && (!block.targets || grunt.util._.indexOf(block.targets, this.target) >= 0)) {
       result = this._replace(block, result);
-    } else if (this.stripUnparsed) {
+    } else if (this.strip) {
       result = this._strip(block, result);
     }
   }, this);

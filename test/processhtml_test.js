@@ -34,13 +34,23 @@ exports.processhtml = {
   },
   
   marker: function(test) {
-    test.expect(1);
+		test.expect(1);
 
-    var actual = grunt.file.read('test/fixtures/commentMarker/commentMarker.processed.html');
-    var expected = grunt.file.read('test/expected/commentMarker/commentMarker.html');
-    test.equal(actual, expected, 'should process and output an html file as defined by the build special comments for marker target');
+		var actual = grunt.file.read('test/fixtures/commentMarker/commentMarker.processed.html');
+		var expected = grunt.file.read('test/expected/commentMarker/commentMarker.html');
+		test.equal(actual, expected, 'should process and output an html file as defined by the build special comments for marker target');
 
-    test.done();
-  }
+		test.done();
+	},
+
+	strip: function(test) {
+		test.expect(1);
+
+		var actual = grunt.file.read('test/fixtures/strip/strip.processed.html');
+		var expected = grunt.file.read('test/expected/strip/strip.html');
+		test.equal(actual, expected, 'should remove build comments for non-targets');
+
+		test.done();
+	}
   
 };
