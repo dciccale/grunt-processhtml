@@ -37,6 +37,8 @@ This is optional.
 
 Is the target name of your grunt task, for example: `dist`. Is supported for all types, so you can always specify the target if needed.
 
+You can pass multiple comma-separated targets, e.g. `<!-- build:remove:dist,dev,prod -->` and block will be parsed for each.
+
 ##### value
 Required for types: `js`, `css`, `include` and `[attr]`.
 
@@ -46,11 +48,11 @@ Could be a file name: `script.min.js` or a path if an attribute like `[src]` is 
 
 ### Simple examples
 
-##### `build:js[:target] <value>`
+##### `build:js[:targets] <value>`
 
 Replace many script tags into one.
 
-`[:target]` Optional build target.
+`[:targets]` Optional build targets.
 
 `<value>` Required value: A file path.
 
@@ -64,11 +66,11 @@ Replace many script tags into one.
 <script src="app.min.js"></script>
 ```
 
-##### `build:css[:target] <value>`
+##### `build:css[:targets] <value>`
 
 Replace many stylesheet link tags into one.
 
-`[:target]` Optional build target.
+`[:targets]` Optional build targets.
 
 `<value>` Required value: A file path.
 
@@ -82,13 +84,13 @@ Replace many stylesheet link tags into one.
 <link rel="stylesheet" href="style.min.css">
 ```
 
-##### `build:<[attr]>[:target] <value>`
+##### `build:<[attr]>[:targets] <value>`
 
 Change the value of an attribute. In most cases using `[src]` and `[href]` will be enough but it works with any html attribute.
 
 `<[attr]>` Required html attribute, i.e. `[src]`, `[href]`.
 
-`[:target]` Optional build target.
+`[:targets]` Optional build targets.
 
 `<value>` Required value: A path or a file path.
 
@@ -122,11 +124,11 @@ Change the value of an attribute. In most cases using `[src]` and `[href]` will 
 
 ```
 
-##### `build:include[:target] <value>`
+##### `build:include[:targets] <value>`
 
 Include an external file.
 
-`[:target]` Optional build target.
+`[:targets]` Optional build targets.
 
 `<value>` Required value: A file path.
 
@@ -144,11 +146,11 @@ This will be replaced by the content of dist/content.html
 <!-- /build -->
 ```
 
-##### `build:template[:target]`
+##### `build:template[:targets]`
 
 Process a template block with a data object inside [options.data](#optionsdata).
 
-`[:target]` Optional build target.
+`[:targets]` Optional build targets.
 
 
 ```html
@@ -162,11 +164,11 @@ to prevent breaking the html file and keeping it functional
 -->
 ```
 
-##### `build:remove[:target]`
+##### `build:remove[:targets]`
 
 Remove a block.
 
-`[:target]` Optional build target
+`[:targets]` Optional build targets
 
 ```html
 <!-- build:remove -->
@@ -248,9 +250,19 @@ in conjuction with other plugins that use a similar, conflicting `build:<type>` 
 With `options.commentMarker` set to `process`, a typical comment would look like:
 
 ```html
-<!-- process:<type>[:target] [value] -->
+<!-- process:<type>[:targets] [value] -->
 ...
 <!-- /process -->
+```
+
+#### options.strip
+Type: `Boolean`
+Default value: `null`
+
+Specifying `true` (boolean, no quotes) will strip comments which do not match the current target:
+
+```javascript
+strip: true
 ```
 
 ### Usage Examples
