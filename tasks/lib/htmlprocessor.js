@@ -20,7 +20,7 @@ var getBlocks = function (content, marker) {
    * - target|attribute i.e. dev, release or [href] [src]
    * - value (optional) i.e. script.min.js
   */
-  var regbuild = new RegExp('<!--\\s*' + marker + ':(\\[?[\\w-]+\\]?)(?::(\\w+))?(?:\\s*([^\\s]+)\\s*-->)*');
+  var regbuild = new RegExp('<!--\\s*' + marker + ':(\\[?[\\w-]+\\]?)(?::([\\w,]+))?(?:\\s*([^\\s]+)\\s*-->)*');
   // <!-- /build -->
   var regend = new RegExp('(?:<!--\\s*)*\\/' + marker + '\\s*-->');
   // normalize line endings and split in lines
@@ -40,7 +40,7 @@ var getBlocks = function (content, marker) {
       block = {
         type: attr ? 'attr': build[1],
         attr: attr,
-        target: build[2],
+        targets: !!build[2] ? build[2].split(',') : null,
         asset: build[3],
         indent: /^\s*/.exec(line)[0],
         raw: []
@@ -116,6 +116,7 @@ var HTMLProcessor = module.exports = function (content, options, filePath) {
   this.linefeed = /\r\n/g.test(content) ? '\r\n' : '\n';
   this.blocks = getBlocks(content, options.commentMarker);
   this.blockTypes = getBlockTypes(options, filePath);
+	this.strip = options.strip === true;
 };
 
 HTMLProcessor.prototype._replace = function (block, content) {
@@ -125,13 +126,24 @@ HTMLProcessor.prototype._replace = function (block, content) {
   return result;
 };
 
+HTMLProcessor.prototype._strip = function (block, content) {
+  var blockLine = block.raw.join(this.linefeed);
+  var blockRegExp = utils.blockToRegExp(blockLine);
+	console.log(blockRegExp);
+  var blockContent = block.raw.slice(1, -1).join(this.linefeed);
+  var result = content.replace(blockRegExp, '\n\n' + blockContent);
+  return result;
+};
+
 HTMLProcessor.prototype.process = function () {
   var result = this.content;
 
   grunt.util._.each(this.blocks, function (block) {
     // parse through correct block type also checking the build target
-    if (this.blockTypes[block.type] && (!block.target || block.target === this.target)) {
+    if (this.blockTypes[block.type] && (!block.targets || grunt.util._.indexOf(block.targets, this.target) >= 0)) {
       result = this._replace(block, result);
+    } else if (this.strip) {
+      result = this._strip(block, result);
     }
   }, this);
 

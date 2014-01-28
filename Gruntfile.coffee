@@ -54,6 +54,28 @@ module.exports = ->
         files:
           "test/fixtures/commentMarker/commentMarker.processed.html": ["test/fixtures/commentMarker.html"]
 
+      strip:
+        options:
+          strip: true
+
+        files:
+          "test/fixtures/strip/strip.processed.html": ["test/fixtures/strip.html"]
+
+      ###
+      The following three tests are for describing multiple targets
+      ###
+      mult_one:
+        files:
+          "test/fixtures/multiple/mult_one.processed.html": ["test/fixtures/multiple.html"]
+
+      mult_two:
+        files:
+          "test/fixtures/multiple/mult_two.processed.html": ["test/fixtures/multiple.html"]
+
+      mult_three:
+        files:
+          "test/fixtures/multiple/mult_three.processed.html": ["test/fixtures/multiple.html"]
+
     nodeunit:
       tests: ["test/*_test.js"]
 
