@@ -101,9 +101,12 @@ var getBlockTypes = function (options, filePath) {
       var base = options.includeBase || path.dirname(filePath);
       var filepath = path.join(base, block.asset);
       var fileContent;
+      var l = blockLine.length, i;
       if (grunt.file.exists(filepath)) {
         fileContent = block.indent + grunt.file.read(filepath);
-        content = content.replace(blockLine, fileContent);
+        while ((i = content.indexOf(blockLine)) !== -1) {
+          content = content.substring(0, i) + fileContent + content.substring(i + l);
+        }
       }
       return content;
     }
