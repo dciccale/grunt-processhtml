@@ -441,6 +441,7 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.2.8 Changed `include` to not use `replace()`.
 - 0.2.7 Added `commentMarker` option
 - 0.2.6 Fix #14 and added grunt-release
 - 0.2.5 Create first tag using grunt-release
