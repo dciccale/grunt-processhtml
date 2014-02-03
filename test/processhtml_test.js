@@ -79,5 +79,15 @@ exports.processhtml = {
     test.equal(actual, expected, 'include a js file');
 
     test.done();
+  },
+
+  conditional_ie: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/conditional_ie/conditional_ie.processed.html');
+    var expected = grunt.file.read('test/expected/conditional_ie/conditional_ie.html');
+    test.equal(actual, expected, 'correctly parse build comments inside conditional ie statement');
+
+    test.done();
   }
 };

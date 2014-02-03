@@ -2,7 +2,7 @@
  * grunt-processhtml
  * https://github.com/dciccale/grunt-processhtml
  *
- * Copyright (c) 2013 Denis Ciccale (@tdecs)
+ * Copyright (c) 2013-2014 Denis Ciccale (@tdecs)
  * Licensed under the MIT license.
  * https://github.com/dciccale/grunt-processhtml/blob/master/LICENSE-MIT
  */

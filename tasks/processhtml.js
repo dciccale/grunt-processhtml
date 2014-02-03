@@ -2,7 +2,7 @@
  * grunt-processhtml
  * https://github.com/dciccale/grunt-processhtml
  *
- * Copyright (c) 2013 Denis Ciccale (@tdecs)
+ * Copyright (c) 2013-2014 Denis Ciccale (@tdecs)
  * Licensed under the MIT license.
  * https://github.com/dciccale/grunt-processhtml/blob/master/LICENSE-MIT
  */
@@ -19,15 +19,17 @@ module.exports = function (grunt) {
       process: false,
       data: {},
       templateSettings: null,
-      commentMarker: 'build'
+      includeBase: null,
+      commentMarker: 'build',
+      strip: false
     });
 
-    // extend template data
+    // Extend template data
     grunt.util._.extend(options.data, {
       environment: this.target
     });
 
-    // set custom delimiters
+    // Set custom delimiters
     var templateSettings = options.templateSettings;
     if (templateSettings && templateSettings.opener && templateSettings.closer) {
       grunt.template.addDelimiters('lodash', templateSettings.opener, templateSettings.closer);

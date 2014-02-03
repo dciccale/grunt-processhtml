@@ -80,6 +80,10 @@ module.exports = ->
         files:
           "test/fixtures/include/include.processed.html": ["test/fixtures/include.html"]
 
+      conditional_ie:
+        files:
+          "test/fixtures/conditional_ie/conditional_ie.processed.html": ["test/fixtures/conditional_ie.html"]
+
     nodeunit:
       tests: ["test/*_test.js"]
 
