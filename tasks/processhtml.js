@@ -21,7 +21,8 @@ module.exports = function (grunt) {
       templateSettings: null,
       includeBase: null,
       commentMarker: 'build',
-      strip: false
+      strip: false,
+      recursive: false
     });
 
     // Extend template data

@@ -84,6 +84,12 @@ module.exports = ->
         files:
           "test/fixtures/conditional_ie/conditional_ie.processed.html": ["test/fixtures/conditional_ie.html"]
 
+      recursive:
+        options:
+          recursive: true
+        files:
+          "test/fixtures/recursive/recursive.processed.html": ["test/fixtures/recursive.html"]
+
     nodeunit:
       tests: ["test/*_test.js"]
 

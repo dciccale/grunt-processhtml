@@ -259,10 +259,20 @@ With `options.commentMarker` set to `process`, a typical comment would look like
 Type: `Boolean`
 Default value: `null`
 
-Specifying `true` (boolean, no quotes) will strip comments which do not match the current target:
+Specifying `true` will strip comments which do not match the current target:
 
 ```javascript
 strip: true
+```
+
+#### options.recursive
+Type: `Boolean`
+Default value: `false`
+
+Recursively process files that are being included using `build:include`.
+
+```javascript
+recursive: true
 ```
 
 ### Usage Examples
@@ -441,7 +451,8 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-- 0.2.8 Changed `include` to not use `replace()`.
+- 0.2.9 Added `recursive` option
+- 0.2.8 Changed `include` to not use `replace()`
 - 0.2.7 Added `commentMarker` option
 - 0.2.6 Fix #14 and added grunt-release
 - 0.2.5 Create first tag using grunt-release

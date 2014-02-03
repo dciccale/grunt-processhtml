@@ -89,5 +89,15 @@ exports.processhtml = {
     test.equal(actual, expected, 'correctly parse build comments inside conditional ie statement');
 
     test.done();
+  },
+
+  recursive_process: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/recursive/recursive.processed.html');
+    var expected = grunt.file.read('test/expected/recursive/recursive.html');
+    test.equal(actual, expected, 'recursively process included files');
+
+    test.done();
   }
 };
