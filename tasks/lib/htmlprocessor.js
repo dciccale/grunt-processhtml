@@ -38,7 +38,7 @@ var getBlocks = function (content, marker) {
 
     if (build) {
       inside = true;
-      attr = build[1].match(/(?:\[([\w-]+)\])*/)[1];
+      attr = build[1].match(/(?:\[([\w\-]+)\])*/)[1];
       block = {
         type: attr ? 'attr': build[1],
         attr: attr,
