@@ -26,12 +26,12 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt --verbose"
   },
   "devDependencies": {
     "grunt": "0.4.1",
-    "grunt-contrib-jshint": "0.6.4",
-    "grunt-contrib-nodeunit": "0.2.1",
+    "grunt-contrib-jshint": "0.8.0",
+    "grunt-contrib-nodeunit": "0.3.0",
     "grunt-release": "0.6.0"
   },
   "peerDependencies": {
