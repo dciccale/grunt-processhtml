@@ -21,9 +21,11 @@ var getBlocks = function (content, marker) {
    * - value (optional) i.e. script.min.js
   */
   var regbuild = new RegExp('<!--\\s*' + marker + ':(\\[?[\\w-]+\\]?)(?::([\\w,]+))?(?:\\s*([^\\s]+)\\s*-->)*');
+
   // <!-- /build -->
   var regend = new RegExp('(?:<!--\\s*)*\\/' + marker + '\\s*-->');
-  // normalize line endings and split in lines
+
+  // Normalize line endings and split in lines
   var lines = content.replace(/\r\n/g, '\n').split(/\n/);
   var inside = false;
   var sections = [];
@@ -75,39 +77,48 @@ var getBlockTypes = function (options, filePath) {
     },
 
     attr: function (content, block, blockLine, blockContent) {
-      // only run attr replacer for the block content
+
+      // Only run attr replacer for the block content
       var re = new RegExp('(\\s*(?:' + block.attr + ')=[\'"])(.*)?(".*)', 'gi');
       var replacedBlock = blockContent.replace(re, function (wholeMatch, start, asset, end) {
-        // check if only the path was provided to leave the original asset name intact
+
+        // Check if only the path was provided to leave the original asset name intact
         asset = (!path.extname(block.asset) && /\//.test(block.asset))? block.asset + path.basename(asset) : block.asset;
+
         return start + asset + end;
       });
+
       return content.replace(blockLine, replacedBlock);
     },
 
     remove: function (content, block, blockLine, blockContent) {
       var blockRegExp = utils.blockToRegExp(blockLine);
+
       return content.replace(blockRegExp, '');
     },
 
     template: function (content, block, blockLine, blockContent) {
       var compiledTmpl = utils.template(blockContent, options);
-      // clean template output and fix indent
+
+      // Clean template output and fix indent
       compiledTmpl = block.indent + grunt.util._.trim(compiledTmpl).replace(/([\r\n])\s*/g, '$1' + block.indent);
+
       return content.replace(blockLine, compiledTmpl);
     },
 
     include: function (content, block, blockLine, blockContent) {
       var base = options.includeBase || path.dirname(filePath);
       var filepath = path.join(base, block.asset);
-      var fileContent;
-      var l = blockLine.length, i;
+      var l = blockLine.length;
+      var fileContent, i;
+
       if (grunt.file.exists(filepath)) {
         fileContent = block.indent + grunt.file.read(filepath);
         while ((i = content.indexOf(blockLine)) !== -1) {
           content = content.substring(0, i) + fileContent + content.substring(i + l);
         }
       }
+
       return content;
     }
   };
@@ -126,15 +137,16 @@ HTMLProcessor.prototype._replace = function (block, content) {
   var blockLine = block.raw.join(this.linefeed);
   var blockContent = block.raw.slice(1, -1).join(this.linefeed);
   var result = this.blockTypes[block.type](content, block, blockLine, blockContent);
+
   return result;
 };
 
 HTMLProcessor.prototype._strip = function (block, content) {
   var blockLine = block.raw.join(this.linefeed);
   var blockRegExp = utils.blockToRegExp(blockLine);
-	console.log(blockRegExp);
   var blockContent = block.raw.slice(1, -1).join(this.linefeed);
   var result = content.replace(blockRegExp, '\n\n' + blockContent);
+
   return result;
 };
 
@@ -142,7 +154,8 @@ HTMLProcessor.prototype.process = function () {
   var result = this.content;
 
   grunt.util._.each(this.blocks, function (block) {
-    // parse through correct block type also checking the build target
+
+    // Parse through correct block type also checking the build target
     if (this.blockTypes[block.type] && (!block.targets || grunt.util._.indexOf(block.targets, this.target) >= 0)) {
       result = this._replace(block, result);
     } else if (this.strip) {

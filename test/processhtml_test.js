@@ -32,43 +32,52 @@ exports.processhtml = {
 
     test.done();
   },
-  
-  marker: function(test) {
-		test.expect(1);
 
-		var actual = grunt.file.read('test/fixtures/commentMarker/commentMarker.processed.html');
-		var expected = grunt.file.read('test/expected/commentMarker/commentMarker.html');
-		test.equal(actual, expected, 'should process and output an html file as defined by the build special comments for marker target');
+  marker: function (test) {
+    test.expect(1);
 
-		test.done();
-	},
+    var actual = grunt.file.read('test/fixtures/commentMarker/commentMarker.processed.html');
+    var expected = grunt.file.read('test/expected/commentMarker/commentMarker.html');
+    test.equal(actual, expected, 'should process and output an html file as defined by the build special comments for marker target');
 
-	strip: function(test) {
-		test.expect(1);
+    test.done();
+  },
 
-		var actual = grunt.file.read('test/fixtures/strip/strip.processed.html');
-		var expected = grunt.file.read('test/expected/strip/strip.html');
-		test.equal(actual, expected, 'should remove build comments for non-targets');
+  strip: function (test) {
+    test.expect(1);
 
-		test.done();
-	},
+    var actual = grunt.file.read('test/fixtures/strip/strip.processed.html');
+    var expected = grunt.file.read('test/expected/strip/strip.html');
+    test.equal(actual, expected, 'should remove build comments for non-targets');
 
-	multiple: function(test) {
-		test.expect(3);
+    test.done();
+  },
 
-		var actual = grunt.file.read('test/fixtures/multiple/mult_one.processed.html');
-		var expected = grunt.file.read('test/expected/multiple/mult_one.html');
-		test.equal(actual, expected, 'parse comment block defining multiple targets (1)');
+  multiple: function (test) {
+    test.expect(3);
 
-		actual = grunt.file.read('test/fixtures/multiple/mult_two.processed.html');
-		expected = grunt.file.read('test/expected/multiple/mult_two.html');
-		test.equal(actual, expected, 'parse comment block defining multiple targets (2)');
+    var actual = grunt.file.read('test/fixtures/multiple/mult_one.processed.html');
+    var expected = grunt.file.read('test/expected/multiple/mult_one.html');
+    test.equal(actual, expected, 'parse comment block defining multiple targets (1)');
 
-		actual = grunt.file.read('test/fixtures/multiple/mult_three.processed.html');
-		expected = grunt.file.read('test/expected/multiple/mult_three.html');
-		test.equal(actual, expected, 'parse comment block defining multiple targets (3)');
+    actual = grunt.file.read('test/fixtures/multiple/mult_two.processed.html');
+    expected = grunt.file.read('test/expected/multiple/mult_two.html');
+    test.equal(actual, expected, 'parse comment block defining multiple targets (2)');
 
-		test.done();
-	}
-  
+    actual = grunt.file.read('test/fixtures/multiple/mult_three.processed.html');
+    expected = grunt.file.read('test/expected/multiple/mult_three.html');
+    test.equal(actual, expected, 'parse comment block defining multiple targets (3)');
+
+    test.done();
+  },
+
+  include_js: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/include/include.processed.html');
+    var expected = grunt.file.read('test/expected/include/include.html');
+    test.equal(actual, expected, 'include a js file');
+
+    test.done();
+  }
 };

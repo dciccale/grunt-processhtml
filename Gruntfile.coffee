@@ -44,13 +44,13 @@ module.exports = ->
 
         files:
           "test/fixtures/custom/custom.processed.html": ["test/fixtures/custom.html"]
-          
+
       marker:
         options:
           commentMarker: 'process'
           data:
             message: "This uses a custom comment marker"
-          
+
         files:
           "test/fixtures/commentMarker/commentMarker.processed.html": ["test/fixtures/commentMarker.html"]
 
@@ -75,6 +75,10 @@ module.exports = ->
       mult_three:
         files:
           "test/fixtures/multiple/mult_three.processed.html": ["test/fixtures/multiple.html"]
+
+      include_js:
+        files:
+          "test/fixtures/include/include.processed.html": ["test/fixtures/include.html"]
 
     nodeunit:
       tests: ["test/*_test.js"]
