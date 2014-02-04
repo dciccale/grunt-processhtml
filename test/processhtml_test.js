@@ -99,5 +99,15 @@ exports.processhtml = {
     test.equal(actual, expected, 'recursively process included files');
 
     test.done();
+  },
+
+  custom_blocktype: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/custom_blocktype/custom_blocktype.processed.html');
+    var expected = grunt.file.read('test/expected/custom_blocktype/custom_blocktype.html');
+    test.equal(actual, expected, 'define custom block types');
+
+    test.done();
   }
 };

@@ -90,6 +90,12 @@ module.exports = ->
         files:
           "test/fixtures/recursive/recursive.processed.html": ["test/fixtures/recursive.html"]
 
+      custom_blocktype:
+        options:
+          customBlockTypes: ['test/fixtures/custom_blocktype.js']
+        files:
+          "test/fixtures/custom_blocktype/custom_blocktype.processed.html": ["test/fixtures/custom_blocktype.html"]
+
     nodeunit:
       tests: ["test/*_test.js"]
 

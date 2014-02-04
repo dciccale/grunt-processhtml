@@ -275,6 +275,48 @@ Recursively process files that are being included using `build:include`.
 recursive: true
 ```
 
+#### options.customBlockTypes
+Type: `Array`
+Default value: `[]`
+
+Define an array of `.js` files that define custom block types.
+
+```javascript
+customBlockTypes: true
+```
+
+A custom block type example:
+
+`custom_blocktype.js`
+
+```js
+'use strict';
+
+module.exports = function (processor) {
+  processor.registerBlockType('customBlock', function (content, block, blockLine, blockContent) {
+    var title = '<h1>' + block.asset + '</h1>';
+    var result = content.replace(blockLine, title);
+
+    return result;
+  });
+};
+```
+
+`file.html`
+
+```html
+<!-- build:customBlock myValue -->
+<p>This will be replaced with the result fo the custom block above</p>
+<!-- /build -->
+```
+
+The result will be
+
+```html
+<h1>myValue</h1>
+```
+
+
 ### Usage Examples
 
 #### Default Options
@@ -451,6 +493,7 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.3.0 Allow creating custom block types.
 - 0.2.9 Added `recursive` option
 - 0.2.8 Changed `include` to not use `replace()`
 - 0.2.7 Added `commentMarker` option

@@ -11,8 +11,9 @@
 
 module.exports = function (grunt) {
 
-  var utils = require('./lib/utils');
-  var HTMLProcessor = require('./lib/htmlprocessor');
+  var utils = require('../lib/utils');
+  var HTMLProcessor = require('../lib/htmlprocessor');
+  var path = require('path');
 
   grunt.registerMultiTask('processhtml', 'Process html files at build time to modify them depending on the release environment', function () {
     var options = this.options({
@@ -22,10 +23,11 @@ module.exports = function (grunt) {
       includeBase: null,
       commentMarker: 'build',
       strip: false,
-      recursive: false
+      recursive: false,
+      customBlockTypes: [],
     });
 
-    // Extend template data
+    // Extend template data with the current target
     grunt.util._.extend(options.data, {
       environment: this.target
     });
@@ -37,6 +39,16 @@ module.exports = function (grunt) {
       options.delimiters = 'lodash';
     }
 
+    // Allow registering custom block types
+    var customBlockTypes = options.customBlockTypes;
+    if (customBlockTypes && customBlockTypes.length) {
+      options.customBlockTypes = customBlockTypes.map(function (processor) {
+        return path.resolve(processor);
+      });
+    }
+
+    var html = new HTMLProcessor(options);
+
     this.files.forEach(function (f) {
       var src = f.src.filter(function (filepath) {
         if (!grunt.file.exists(filepath)) {
@@ -46,12 +58,12 @@ module.exports = function (grunt) {
           return true;
         }
       }).map(function (filepath) {
-        var content = grunt.file.read(filepath);
-        var html = new HTMLProcessor(content, options, filepath);
-        content = html.process();
+        var content = html.process(filepath);
+
         if (options.process) {
           content = utils.template(content, options);
         }
+
         return content;
       }).join(grunt.util.linefeed);
 
