@@ -306,7 +306,7 @@ module.exports = function (processor) {
 
 ```html
 <!-- build:customBlock myValue -->
-<p>This will be replaced with the result fo the custom block above</p>
+<p>This will be replaced with the result of the custom block above</p>
 <!-- /build -->
 ```
 
