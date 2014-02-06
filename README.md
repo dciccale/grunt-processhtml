@@ -282,17 +282,18 @@ Default value: `[]`
 Define an array of `.js` files that define custom block types.
 
 ```javascript
-customBlockTypes: true
+customBlockTypes: ['custom-blocktype.js']
 ```
 
 A custom block type example:
 
-`custom_blocktype.js`
+`custom-blocktype.js`
 
 ```js
 'use strict';
 
 module.exports = function (processor) {
+  // This will allow to use this <!-- build:customBlock[:target] <value> --> syntax
   processor.registerBlockType('customBlock', function (content, block, blockLine, blockContent) {
     var title = '<h1>' + block.asset + '</h1>';
     var result = content.replace(blockLine, title);
