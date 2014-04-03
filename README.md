@@ -92,7 +92,7 @@ Change the value of an attribute. In most cases using `[src]` and `[href]` will 
 
 `[:targets]` Optional build targets.
 
-`<value>` Required value: A path or a file path.
+`<value>` Required value: A path, a file path or any string value
 
 ```html
 <!-- If only a path is used, the original file name will remain -->
