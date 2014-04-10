@@ -1,7 +1,7 @@
 {
   "name": "grunt-processhtml",
   "description": "Process html files at build time to modify them depending on the release environment",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/dciccale/grunt-processhtml",
   "author": {
     "name": "Denis Ciccale",
