@@ -92,7 +92,7 @@ Change the value of an attribute. In most cases using `[src]` and `[href]` will 
 
 `[:targets]` Optional build targets.
 
-`<value>` Required value: A path or a file path.
+`<value>` Required value: A path, a file path or any string value
 
 ```html
 <!-- If only a path is used, the original file name will remain -->
@@ -282,17 +282,18 @@ Default value: `[]`
 Define an array of `.js` files that define custom block types.
 
 ```javascript
-customBlockTypes: true
+customBlockTypes: ['custom-blocktype.js']
 ```
 
 A custom block type example:
 
-`custom_blocktype.js`
+`custom-blocktype.js`
 
 ```js
 'use strict';
 
 module.exports = function (processor) {
+  // This will allow to use this <!-- build:customBlock[:target] <value> --> syntax
   processor.registerBlockType('customBlock', function (content, block, blockLine, blockContent) {
     var title = '<h1>' + block.asset + '</h1>';
     var result = content.replace(blockLine, title);
@@ -306,7 +307,7 @@ module.exports = function (processor) {
 
 ```html
 <!-- build:customBlock myValue -->
-<p>This will be replaced with the result fo the custom block above</p>
+<p>This will be replaced with the result of the custom block above</p>
 <!-- /build -->
 ```
 
