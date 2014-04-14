@@ -228,7 +228,7 @@ is true.
 Type: `Object`
 Default value: `null` (Will use default lodash template delimiters `<%` and `%>`)
 
-Define the `templateSettings` option with lodash (templateSettings)[http://lodash.com/docs#templateSettings] options to customize the
+Define the `templateSettings` option with lodash [templateSettings](http://lodash.com/docs#templateSettings) options to customize the
 template syntax.
 
 ```javascript
