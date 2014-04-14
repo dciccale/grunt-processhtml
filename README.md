@@ -415,7 +415,7 @@ grunt.initConfig({
     },
     dist: {
       options: {
-        process: true
+        process: true,
         data: {
           title: 'My app',
           message: 'This is production distribution'
