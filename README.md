@@ -498,6 +498,7 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.3.3 Add [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor) as a dependency
 - 0.3.2 Fix/feature #39
 - 0.3.1 Fix #35
 - 0.3.0 Allow creating custom block types.
