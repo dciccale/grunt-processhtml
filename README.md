@@ -211,25 +211,29 @@ below to see that you can have templates blocks to be processed.*
 If you do wan't to process the whole file as a template, it will be compiled after compiling the inside template blocks
 if any.
 
+#### options.environment
+Type: `Object`
+Default value: `target`
+
+The environemnt variable will be available to use in the comments, it defaults to the task target.
+
 #### options.data
 Type: `Object`
-Default value: `{environment: target}`
+Default value: `{}`
 
 An object `data` that is passed to the `html` file used to compile all template blocks and the entire file if `process`
 is true.
-If a custom object is passed as `data`, this will be merged with the default to keep the `environment` key intact.
 
 #### options.templateSettings
 Type: `Object`
-Default value: `null` (Will use default grunt template delimiters `<%` and `%>`)
+Default value: `null` (Will use default lodash template delimiters `<%` and `%>`)
 
-Define the `templateSettings` option with a custom `opener` and `closer` delimiters to customize the
-template syntax delimiters.
+Define the `templateSettings` option with lodash (templateSettings)[http://lodash.com/docs#templateSettings] options to customize the
+template syntax.
 
 ```javascript
 templateSettings: {
-  opener: '{{',
-  closer: '}}'
+  interpolate: /{{([\s\S]+?)}}/g // mustache
 }
 ```
 

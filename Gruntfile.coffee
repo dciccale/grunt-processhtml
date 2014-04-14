@@ -37,8 +37,7 @@ module.exports = ->
       custom:
         options:
           templateSettings:
-            opener: '{{'
-            closer: '}}'
+            interpolate: /{{([\s\S]+?)}}/g
           data:
             message: "This has custom delimiters for the template"
 
