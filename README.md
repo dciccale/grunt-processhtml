@@ -428,8 +428,7 @@ grunt.initConfig({
     custom: {
       options: {
         templateSettings: {
-          opener: '{{',
-          closer: '}}'
+          interpolate: /{{([\s\S]+?)}}/g // mustache
         },
         data: {
           message: 'This has custom template delimiters'
@@ -479,6 +478,7 @@ when not being processed; is a perfectly valid title string -->
 ```
 
 The `custom.html` to be processed:
+
 ```html
 <!doctype html>
 <html>
@@ -488,7 +488,7 @@ The `custom.html` to be processed:
 
   <body>
     <!-- build:template
-    {{= message }}
+    {{ message }}
     /build -->
   </body>
 </html>
