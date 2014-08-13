@@ -2,6 +2,10 @@
 
 > Process html files at build time to modify them depending on the release environment
 
+### Looking for the stand-alone version?
+
+Use [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor)
+
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
