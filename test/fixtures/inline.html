@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Inline CSS</title>
+
+    <!-- build:css styles.css -->
+    <link rel="stylesheet" href="styles1.css">
+    <link rel="stylesheet" href="styles2.css">
+    <!-- /build -->
+
+    <!-- build:css:dist inline -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- /build -->
+
+    <!-- build:css:dist inline styles.css -->
+    <link rel="stylesheet" href="styles1.css">
+    <link rel="stylesheet" href="styles2.css">
+    <!-- /build -->
+
+</head>
+<body>
+
+    <!-- build:js script_include.js -->
+    <script src="js/app/script1.js"></script>
+    <script src="js/app/script2.js"></script>
+    <!-- /build -->
+
+    <!-- build:js inline -->
+    <script src="script_include.js"></script>
+    <script src="script_include.js"></script>
+    <script src="script_include.js"></script>
+    <!-- /build -->
+
+    <!-- build:js:dist inline script_include.js -->
+    <script src="js/app/main.js"></script>
+    <script src="js/app/module.js"></script>
+    <!-- /build -->
+
+</body>
+</html>
