@@ -212,7 +212,7 @@ template in the form of `{environment: target}` where environment will be the bu
 *Important note: The `process` option is not needed if you don't want to process the entire html file. See the example
 below to see that you can have templates blocks to be processed.*
 
-If you do wan't to process the whole file as a template, it will be compiled after compiling the inside template blocks
+If you do want to process the whole file as a template, it will be compiled after compiling the inside template blocks
 if any.
 
 #### options.environment
