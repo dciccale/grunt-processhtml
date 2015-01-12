@@ -95,6 +95,14 @@ module.exports = ->
         files:
           "test/fixtures/custom_blocktype/custom_blocktype.processed.html": ["test/fixtures/custom_blocktype.html"]
 
+      template:
+        options:
+          data:
+            msg: "hey"
+            test: "text_$&_text"
+        files:
+          "test/fixtures/template/template.processed.html": ["test/fixtures/template.html"]
+
     nodeunit:
       tests: ["test/*_test.js"]
 

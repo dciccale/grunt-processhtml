@@ -109,5 +109,15 @@ exports.processhtml = {
     test.equal(actual, expected, 'define custom block types');
 
     test.done();
+  },
+
+  template: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/template/template.processed.html');
+    var expected = grunt.file.read('test/expected/template/template.html');
+    test.equal(actual, expected, 'define custom block types');
+
+    test.done();
   }
 };
