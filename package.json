@@ -29,7 +29,7 @@
     "test": "grunt --verbose"
   },
   "dependencies": {
-    "htmlprocessor": "0.1.8"
+    "htmlprocessor": "0.1.9"
   },
   "devDependencies": {
     "grunt": "0.4.1",
