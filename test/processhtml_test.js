@@ -119,5 +119,15 @@ exports.processhtml = {
     test.equal(actual, expected, 'define custom block types');
 
     test.done();
+  },
+
+  inline: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/inline/inline.processed.html');
+    var expected = grunt.file.read('test/expected/inline/inline.html');
+    test.equal(actual, expected, 'inline (embedd) css and js files');
+
+    test.done();
   }
 };

@@ -60,6 +60,13 @@ module.exports = ->
         files:
           "test/fixtures/strip/strip.processed.html": ["test/fixtures/strip.html"]
 
+      inline:
+        options:
+          environment: null
+
+        files:
+          "test/fixtures/inline/inline.processed.html": ["test/fixtures/inline.html"]
+
       ###
       The following three tests are for describing multiple targets
       ###

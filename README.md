@@ -26,7 +26,7 @@ grunt.loadNpmTasks('grunt-processhtml');
 Process `html` files with special comments:
 
 ```html
-<!-- build:<type>[:target] [value] -->
+<!-- build:<type>[:target] [inline] [value] -->
 ...
 <!-- /build -->
 ```
@@ -43,20 +43,27 @@ Is the target name of your grunt task, for example: `dist`. Is supported for all
 
 You can pass multiple comma-separated targets, e.g. `<!-- build:remove:dist,dev,prod -->` and block will be parsed for each.
 
+##### inline
+This modifier can be used with `js` and `css` types.
+
+If used styles or scripts will be included in the output html file.
+
 ##### value
 Required for types: `js`, `css`, `include` and `[attr]`.
 
-Optional for types: `remove`, `template`.
+Optional for types: `remove`, `template` and `js`, `css` types with `inline` modifier.
 
 Could be a file name: `script.min.js` or a path if an attribute like `[src]` is specified to keep the original file name intact but replace its path.
 
 ### Simple examples
 
-##### `build:js[:targets] <value>`
+##### `build:js[:targets] [inline] <value>`
 
 Replace many script tags into one.
 
 `[:targets]` Optional build targets.
+
+`inline` Optional modifier.
 
 `<value>` Required value: A file path.
 
@@ -70,11 +77,42 @@ Replace many script tags into one.
 <script src="app.min.js"></script>
 ```
 
-##### `build:css[:targets] <value>`
+You can embed your javascript:
+
+```html
+<!-- build:js inline app.min.js -->
+<script src="my/lib/path/lib.js"></script>
+<script src="my/deep/development/path/script.js"></script>
+<!-- /build -->
+
+<!-- changed to -->
+<script>
+  // app.min.js code here
+</script>
+```
+
+or
+
+```html
+<!-- build:js inline -->
+<script src="my/lib/path/lib.js"></script>
+<script src="my/deep/development/path/script.js"></script>
+<!-- /build -->
+
+<!-- changed to -->
+<script>
+  // my/lib/path/lib.js code here then...
+  // my/deep/development/path/script.js code goes here
+</script>
+```
+
+##### `build:css[:targets] [inline] <value>`
 
 Replace many stylesheet link tags into one.
 
 `[:targets]` Optional build targets.
+
+`inline` Optional modifier.
 
 `<value>` Required value: A file path.
 
@@ -86,6 +124,35 @@ Replace many stylesheet link tags into one.
 
 <!-- changed to -->
 <link rel="stylesheet" href="style.min.css">
+```
+
+You can embed your styles like with `js` type above:
+
+```html
+<!-- build:css inline -->
+<link rel="stylesheet" href="path/to/normalize.css">
+<link rel="stylesheet" href="path/to/main.css">
+<!-- /build -->
+
+<!-- changed to -->
+<style>
+  /* path/to/normalize.css */
+  /* path/to/main.css */
+</style>
+```
+
+or
+
+```html
+<!-- build:css inline style.min.css -->
+<link rel="stylesheet" href="path/to/normalize.css">
+<link rel="stylesheet" href="path/to/main.css">
+<!-- /build -->
+
+<!-- changed to -->
+<style>
+  /* style.min.css */
+</style>
 ```
 
 ##### `build:<[attr]>[:targets] <value>`
@@ -502,6 +569,7 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.3.7 Update [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor) dependency with added `inline` modifier
 - 0.3.6 Update node-htmlprocessor version and add specific test for templates
 - 0.3.5 Fixes issue when passing data to a `template`
 - 0.3.4 Fixes issue when passing a path te replace an `[attr]`
