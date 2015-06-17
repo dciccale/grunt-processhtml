@@ -31,9 +31,10 @@ module.exports = function (grunt) {
     var done = this.async();
     var html = new HTMLProcessor(options);
 
-    async.eachSeries(this.files, function(f, n) {
+    async.eachSeries(this.files, function (f, n) {
       var destFile = path.normalize(f.dest);
-      var srcFiles = f.src.filter(function(filepath) {
+
+      var srcFiles = f.src.filter(function (filepath) {
         // Warn on and remove invalid source files (if nonull was set).
         if (!grunt.file.exists(filepath)) {
           grunt.log.warn('Source file "' + filepath + '" not found.');
@@ -48,7 +49,7 @@ module.exports = function (grunt) {
       }
 
       var result = [];
-      async.concatSeries(srcFiles, function(file, next) {
+      async.concatSeries(srcFiles, function (file, next) {
 
         var content = html.process(file);
 
@@ -57,15 +58,13 @@ module.exports = function (grunt) {
         }
 
         result.push(content);
-        next(null);
+        process.nextTick(next);
 
-      }, function() {
+      }, function () {
         grunt.file.write(destFile, result.join(grunt.util.normalizelf(grunt.util.linefeed)));
         grunt.verbose.writeln('File ' + destFile.cyan + ' created.');
         n();
       });
-    }, function() {
-      done();
-    });
+    }, done);
   });
 };
