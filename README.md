@@ -569,6 +569,7 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.3.8 Fix #74
 - 0.3.7 Update [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor) dependency with added `inline` modifier
 - 0.3.6 Update node-htmlprocessor version and add specific test for templates
 - 0.3.5 Fixes issue when passing data to a `template`
