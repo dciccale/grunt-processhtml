@@ -1,4 +1,8 @@
-# grunt-processhtml [![Build Status](https://api.travis-ci.org/dciccale/grunt-processhtml.svg)](https://travis-ci.org/dciccale/grunt-processhtml) [![NPM version](https://badge.fury.io/js/grunt-processhtml.png)](http://badge.fury.io/js/grunt-processhtml)
+# grunt-processhtml 
+
+[![NPM version](https://img.shields.io/npm/v/grunt-processhtml.svg)](https://www.npmjs.com/package/grunt-processhtml)
+[![Build Status](https://api.travis-ci.org/dciccale/grunt-processhtml.svg)](https://travis-ci.org/dciccale/grunt-processhtml) 
+![NPM downloads](https://img.shields.io/npm/dm/grunt-processhtml.svg)
 
 [![Join the chat at https://gitter.im/dciccale/grunt-processhtml](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dciccale/grunt-processhtml?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
