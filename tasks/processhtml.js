@@ -28,6 +28,40 @@ module.exports = function (grunt) {
       environment: this.target
     });
 
+    function clone(obj) {
+
+        if(obj == null)
+            return obj;
+
+        var tp = typeof obj;
+		
+        if(tp === 'string' ||
+            tp === 'number' ||
+            tp === 'boolean' ||
+            tp === 'function') {
+            return obj;
+        } else if(tp === 'object') {
+
+            if(obj instanceof Date) {
+                  return new Date(obj.getTime());
+            } else if(obj instanceof RegExp) {
+                return new RegExp(obj.source);
+            } else {
+                var copy = {};
+                var props = Object.getOwnPropertyNames(obj);
+                for(var prop in obj) {
+                    if(obj.hasOwnProperty(prop)){
+                        copy[prop] = clone(obj[prop]);
+                    }
+                }
+                return copy;
+            }
+        } else {
+            throw 'Cannot handle value of type \'' + tp + '\'.';
+        }
+
+    }
+
     var done = this.async();
     var html = new HTMLProcessor(options);
 
@@ -54,7 +88,7 @@ module.exports = function (grunt) {
         var content = html.process(file);
 
         if (options.process) {
-          content = html.template(content, html.data, options.templateSettings);
+          content = html.template(content, clone(html.data), options.templateSettings);
         }
 
         result.push(content);
