@@ -1,7 +1,7 @@
-# grunt-processhtml 
+# grunt-processhtml
 
 [![NPM version](https://img.shields.io/npm/v/grunt-processhtml.svg)](https://www.npmjs.com/package/grunt-processhtml)
-[![Build Status](https://api.travis-ci.org/dciccale/grunt-processhtml.svg)](https://travis-ci.org/dciccale/grunt-processhtml) 
+[![Build Status](https://api.travis-ci.org/dciccale/grunt-processhtml.svg)](https://travis-ci.org/dciccale/grunt-processhtml)
 [![NPM downloads](https://img.shields.io/npm/dm/grunt-processhtml.svg)](https://www.npmjs.com/package/grunt-processhtml)
 
 [![Join the chat at https://gitter.im/dciccale/grunt-processhtml](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dciccale/grunt-processhtml?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -575,7 +575,8 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-- 0.3.9 Update [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor) version
+- 0.3.10 Update [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor) to version 0.2.1
+- 0.3.9 Update [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor) to version 0.2.0
 - 0.3.8 Fix #74
 - 0.3.7 Update [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor) dependency with added `inline` modifier
 - 0.3.6 Update node-htmlprocessor version and add specific test for templates
