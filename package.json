@@ -39,7 +39,7 @@
     "grunt-release": "0.6.0"
   },
   "peerDependencies": {
-    "grunt": "0.4.x"
+    "grunt": ">=0.4.x"
   },
   "keywords": [
     "process",
