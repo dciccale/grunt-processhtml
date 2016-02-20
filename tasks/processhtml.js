@@ -9,11 +9,13 @@
 
 'use strict';
 
-module.exports = function (grunt) {
+var cloneDeep = require('lodash.clonedeep');
+var path = require('path');
+var async = require('async');
 
-  var HTMLProcessor = require('htmlprocessor');
-  var path = require('path');
-  var async = require('async');
+var HTMLProcessor = require('htmlprocessor');
+
+module.exports = function (grunt) {
 
   grunt.registerMultiTask('processhtml', 'Process html files at build time to modify them depending on the release environment', function () {
     var options = this.options({
@@ -54,7 +56,7 @@ module.exports = function (grunt) {
         var content = html.process(file);
 
         if (options.process) {
-          content = html.template(content, html.data, options.templateSettings);
+          content = html.template(content, cloneDeep(html.data), options.templateSettings);
         }
 
         result.push(content);
