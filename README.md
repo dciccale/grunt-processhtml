@@ -576,6 +576,7 @@ The `custom.html` to be processed:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.4.1 node-htmlprocessor@0.2.4
 - 0.4.0 Update Grunt to 1.0
 - 0.3.13 node-htmlprocessor@0.2.3 and clone data object (#85)
 - 0.3.12 Update [node-htmlprocessor](https://github.com/dciccale/node-htmlprocessor) to version 0.2.2 (escape regex from remove)

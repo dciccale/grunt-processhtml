@@ -1,7 +1,7 @@
 {
   "name": "grunt-processhtml",
   "description": "Process html files at build time to modify them depending on the release environment",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "homepage": "https://github.com/dciccale/grunt-processhtml",
   "author": {
     "name": "Denis Ciccale",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "async": "^1.5.2",
-    "htmlprocessor": "^0.2.3",
+    "htmlprocessor": "^0.2.4",
     "lodash.clonedeep": "^4.3.2"
   },
   "devDependencies": {
