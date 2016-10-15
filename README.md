@@ -196,7 +196,7 @@ Change the value of an attribute. In most cases using `[src]` and `[href]` will 
 <html class="debug_mode">
 <!-- /build -->
 
-<!-- this will change the class to 'production' only when de 'dist' build is executed -->
+<!-- this will change the class to 'production' only when the 'dist' build is executed -->
 <html class="production">
 
 ```
