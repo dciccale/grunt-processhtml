@@ -40,7 +40,7 @@ Process `html` files with special comments:
 ##### type
 This is required.
 
-Types: `js`, `css`, `remove`, `template` or `include`. or any html attribute if written like this: `[href]`, `[src]`, etc.
+Types: `js`, `css`, `remove`, `template`, `include` or any html attribute if written like this: `[href]`, `[src]`, etc.
 
 ##### target
 This is optional.
@@ -52,12 +52,12 @@ You can pass multiple comma-separated targets, e.g. `<!-- build:remove:dist,dev,
 ##### inline
 This modifier can be used with `js` and `css` types.
 
-If used styles or scripts will be included in the output html file.
+If used, the styles or scripts will be included in the output html file.
 
 ##### value
 Required for types: `js`, `css`, `include` and `[attr]`.
 
-Optional for types: `remove`, `template` and `js`, `css` types with `inline` modifier.
+Optional for types: `remove`, `template`, `js` and `css` types with `inline` modifier.
 
 Could be a file name: `script.min.js` or a path if an attribute like `[src]` is specified to keep the original file name intact but replace its path.
 
