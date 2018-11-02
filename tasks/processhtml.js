@@ -9,7 +9,7 @@
 
 'use strict';
 
-var cloneDeep = require('lodash.clonedeep');
+var lodash = require('lodash');
 var path = require('path');
 var async = require('async');
 
@@ -56,7 +56,7 @@ module.exports = function (grunt) {
         var content = html.process(file);
 
         if (options.process) {
-          content = html.template(content, cloneDeep(html.data), options.templateSettings);
+          content = html.template(content, lodash.cloneDeep(html.data), options.templateSettings);
         }
 
         result.push(content);
