@@ -23,21 +23,15 @@
   ],
   "main": "Gruntfile.js",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 8.17.0"
   },
   "scripts": {
     "test": "grunt --verbose"
   },
   "dependencies": {
-    "async": "^1.5.2",
-    "htmlprocessor": "^0.3.1",
-    "lodash": "^4.17.21"
-  },
-  "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-nodeunit": "^1.0.0",
-    "grunt-release": "^0.13.0"
+    "async": "^3.2.3",
+    "htmlprocessor": "0.3.2",
+    "lodash": "4.17.21"
   },
   "keywords": [
     "process",
@@ -49,5 +43,11 @@
     "target",
     "optimize",
     "gruntplugin"
-  ]
+  ],
+  "devDependencies": {
+    "grunt": "^1.4.1",
+    "grunt-contrib-jshint": "^3.2.0",
+    "grunt-contrib-nodeunit": "^4.0.0",
+    "grunt-release": "^0.14.0"
+  }
 }
