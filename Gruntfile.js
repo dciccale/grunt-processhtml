@@ -2,7 +2,7 @@
  * grunt-processhtml
  * https://github.com/dciccale/grunt-processhtml
  *
- * Copyright (c) 2013-2015 Denis Ciccale (@tdecs)
+ * Copyright (c) 2013-2023 Denis Ciccale (@dciccale)
  * Licensed under the MIT license.
  * https://github.com/dciccale/grunt-processhtml/blob/master/LICENSE-MIT
  */
@@ -37,7 +37,9 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'test/fixtures/dist/index.processed.html': ['test/fixtures/index.html']
+          'test/fixtures/dist/index.processed.html': [
+            'test/fixtures/index.html'
+          ]
         }
       },
       custom: {
@@ -50,7 +52,9 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'test/fixtures/custom/custom.processed.html': ['test/fixtures/custom.html']
+          'test/fixtures/custom/custom.processed.html': [
+            'test/fixtures/custom.html'
+          ]
         }
       },
       marker: {
@@ -61,7 +65,9 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'test/fixtures/commentMarker/commentMarker.processed.html': ['test/fixtures/commentMarker.html']
+          'test/fixtures/commentMarker/commentMarker.processed.html': [
+            'test/fixtures/commentMarker.html'
+          ]
         }
       },
       strip: {
@@ -69,7 +75,9 @@ module.exports = function (grunt) {
           strip: true
         },
         files: {
-          'test/fixtures/strip/strip.processed.html': ['test/fixtures/strip.html']
+          'test/fixtures/strip/strip.processed.html': [
+            'test/fixtures/strip.html'
+          ]
         }
       },
       inline: {
@@ -77,7 +85,9 @@ module.exports = function (grunt) {
           environment: null
         },
         files: {
-          'test/fixtures/inline/inline.processed.html': ['test/fixtures/inline.html']
+          'test/fixtures/inline/inline.processed.html': [
+            'test/fixtures/inline.html'
+          ]
         }
       },
 
@@ -86,27 +96,37 @@ module.exports = function (grunt) {
        */
       mult_one: {
         files: {
-          'test/fixtures/multiple/mult_one.processed.html': ['test/fixtures/multiple.html']
+          'test/fixtures/multiple/mult_one.processed.html': [
+            'test/fixtures/multiple.html'
+          ]
         }
       },
       mult_two: {
         files: {
-          'test/fixtures/multiple/mult_two.processed.html': ['test/fixtures/multiple.html']
+          'test/fixtures/multiple/mult_two.processed.html': [
+            'test/fixtures/multiple.html'
+          ]
         }
       },
       mult_three: {
         files: {
-          'test/fixtures/multiple/mult_three.processed.html': ['test/fixtures/multiple.html']
+          'test/fixtures/multiple/mult_three.processed.html': [
+            'test/fixtures/multiple.html'
+          ]
         }
       },
       include_js: {
         files: {
-          'test/fixtures/include/include.processed.html': ['test/fixtures/include.html']
+          'test/fixtures/include/include.processed.html': [
+            'test/fixtures/include.html'
+          ]
         }
       },
       conditional_ie: {
         files: {
-          'test/fixtures/conditional_ie/conditional_ie.processed.html': ['test/fixtures/conditional_ie.html']
+          'test/fixtures/conditional_ie/conditional_ie.processed.html': [
+            'test/fixtures/conditional_ie.html'
+          ]
         }
       },
       recursive: {
@@ -114,7 +134,9 @@ module.exports = function (grunt) {
           recursive: true
         },
         files: {
-          'test/fixtures/recursive/recursive.processed.html': ['test/fixtures/recursive.html']
+          'test/fixtures/recursive/recursive.processed.html': [
+            'test/fixtures/recursive.html'
+          ]
         }
       },
       custom_blocktype: {
@@ -122,7 +144,9 @@ module.exports = function (grunt) {
           customBlockTypes: ['test/fixtures/custom_blocktype.js']
         },
         files: {
-          'test/fixtures/custom_blocktype/custom_blocktype.processed.html': ['test/fixtures/custom_blocktype.html']
+          'test/fixtures/custom_blocktype/custom_blocktype.processed.html': [
+            'test/fixtures/custom_blocktype.html'
+          ]
         }
       },
       template: {
@@ -133,7 +157,9 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'test/fixtures/template/template.processed.html': ['test/fixtures/template.html']
+          'test/fixtures/template/template.processed.html': [
+            'test/fixtures/template.html'
+          ]
         }
       }
     },
