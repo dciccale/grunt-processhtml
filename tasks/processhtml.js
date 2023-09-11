@@ -2,7 +2,7 @@
  * grunt-processhtml
  * https://github.com/dciccale/grunt-processhtml
  *
- * Copyright (c) 2013-2014 Denis Ciccale (@tdecs)
+ * Copyright (c) 2013-2023 Denis Ciccale (@dciccale)
  * Licensed under the MIT license.
  * https://github.com/dciccale/grunt-processhtml/blob/master/LICENSE-MIT
  */
@@ -16,57 +16,73 @@ var async = require('async');
 var HTMLProcessor = require('htmlprocessor');
 
 module.exports = function (grunt) {
-
-  grunt.registerMultiTask('processhtml', 'Process html files at build time to modify them depending on the release environment', function () {
-    var options = this.options({
-      process: false,
-      data: {},
-      templateSettings: null,
-      includeBase: null,
-      commentMarker: 'build',
-      strip: false,
-      recursive: false,
-      customBlockTypes: [],
-      environment: this.target
-    });
-
-    var done = this.async();
-    var html = new HTMLProcessor(options);
-
-    async.eachSeries(this.files, function (f, n) {
-      var destFile = path.normalize(f.dest);
-
-      var srcFiles = f.src.filter(function (filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        }
-        return true;
+  grunt.registerMultiTask(
+    'processhtml',
+    'Process html files at build time to modify them depending on the release environment',
+    function () {
+      var options = this.options({
+        process: false,
+        data: {},
+        templateSettings: null,
+        includeBase: null,
+        commentMarker: 'build',
+        strip: false,
+        recursive: false,
+        customBlockTypes: [],
+        environment: this.target
       });
 
-      if (srcFiles.length === 0) {
-        // No src files, goto next target. Warn would have been issued above.
-        return n();
-      }
+      var done = this.async();
+      var html = new HTMLProcessor(options);
 
-      var result = [];
-      async.concatSeries(srcFiles, function (file, next) {
+      async.eachSeries(
+        this.files,
+        function (f, n) {
+          var destFile = path.normalize(f.dest);
 
-        var content = html.process(file);
+          var srcFiles = f.src.filter(function (filepath) {
+            // Warn on and remove invalid source files (if nonull was set).
+            if (!grunt.file.exists(filepath)) {
+              grunt.log.warn('Source file "' + filepath + '" not found.');
+              return false;
+            }
+            return true;
+          });
 
-        if (options.process) {
-          content = html.template(content, lodash.cloneDeep(html.data), options.templateSettings);
-        }
+          if (srcFiles.length === 0) {
+            // No src files, goto next target. Warn would have been issued above.
+            return n();
+          }
 
-        result.push(content);
-        process.nextTick(next);
+          var result = [];
+          async.concatSeries(
+            srcFiles,
+            function (file, next) {
+              var content = html.process(file);
 
-      }, function () {
-        grunt.file.write(destFile, result.join(grunt.util.normalizelf(grunt.util.linefeed)));
-        grunt.verbose.writeln('File ' + destFile.cyan + ' created.');
-        n();
-      });
-    }, done);
-  });
+              if (options.process) {
+                content = html.template(
+                  content,
+                  lodash.cloneDeep(html.data),
+                  options.templateSettings
+                );
+              }
+
+              result.push(content);
+              process.nextTick(next);
+            },
+            function () {
+              grunt.file.write(
+                destFile,
+                result.join(grunt.util.normalizelf(grunt.util.linefeed))
+              );
+              grunt.verbose.writeln('File ' + destFile.cyan + ' created.');
+              n();
+            }
+          );
+        },
+        done
+      );
+    }
+  );
 };
