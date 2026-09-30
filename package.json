@@ -31,7 +31,7 @@
   "dependencies": {
     "async": "^3.2.3",
     "htmlprocessor": "0.3.3",
-    "lodash": "4.17.21"
+    "lodash": "^4.18.1"
   },
   "keywords": [
     "process",
