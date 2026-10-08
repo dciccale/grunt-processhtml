@@ -1,2 +1,4 @@
 node_modules
 npm-debug.log
+
+test/fixtures/literal_scripts.processed.html

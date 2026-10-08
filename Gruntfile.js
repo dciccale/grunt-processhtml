@@ -18,6 +18,16 @@ module.exports = function (grunt) {
       }
     },
     processhtml: {
+      literal_scripts: {
+        options: {
+          process: true,
+          data: { title: 'Literal scripts' },
+          templateSettings: { interpolate: /<%=([\s\S]+?)%>/g }
+        },
+        files: {
+          'test/fixtures/literal_scripts.processed.html': ['test/fixtures/literal_scripts.html']
+        }
+      },
       dev: {
         options: {
           data: {

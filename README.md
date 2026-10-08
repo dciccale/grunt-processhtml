@@ -273,13 +273,19 @@ grunt.initConfig({
 })
 ```
 
+### Development
+
+Use Node.js 16 or later to run the latest Grunt development tools.
+The published plugin keeps its Node.js 8.17 runtime requirement.
+Run `npm ci` and `npm test` to install dependencies and check the plugin.
+
 ### Options
 
 #### options.process
 Type: `Boolean`
 Default value: `false`
 
-Process the entire `html` file through `grunt.template.process`, a default object with the build target will be passed to the
+Process the entire `html` file through Lodash templates. A default object with the build target will be passed to the
 template in the form of `{environment: target}` where environment will be the build target of the grunt task.
 
 *Important note: The `process` option is not needed if you don't want to process the entire html file. See the example
@@ -287,6 +293,22 @@ below to see that you can have templates blocks to be processed.*
 
 If you do want to process the whole file as a template, it will be compiled after compiling the inside template blocks
 if any.
+
+If the HTML contains JavaScript template strings or shell expressions such as `${name}`,
+Lodash can treat those expressions as template data when `process` is `true`.
+Set explicit interpolation delimiters to keep those expressions unchanged:
+
+```javascript
+options: {
+	process: true,
+	templateSettings: {
+		interpolate: /<%=([\s\S]+?)%>/g
+	}
+}
+```
+
+This setting still processes `<%= name %>`.
+If you only need template blocks, keep `process: false` and keep literal code outside those blocks.
 
 #### options.environment
 Type: `Object`
@@ -574,7 +596,29 @@ The `custom.html` to be processed:
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+## Open issue guidance
+
+- [#120: Lodash security](https://github.com/dciccale/grunt-processhtml/issues/120) is addressed by version 0.4.5.
+  Both the plugin and `htmlprocessor` use Lodash 4.18.1. The production audit is clean.
+- [#132: JavaScript template strings](https://github.com/dciccale/grunt-processhtml/issues/132) and
+  [#115: shell interpolation](https://github.com/dciccale/grunt-processhtml/issues/115) need the explicit
+  `templateSettings.interpolate` setting shown under `options.process`.
+  The regression fixture checks both cases while it also checks HTML template data.
+- [#116: commented CSS links](https://github.com/dciccale/grunt-processhtml/issues/116) remains a parser bug.
+  Inline asset detection also scans HTML comments. Remove the disabled link from the input file as a workaround.
+  A core fix must exclude comment contents before it collects CSS and JavaScript asset paths.
+- [#114: repeated includes](https://github.com/dciccale/grunt-processhtml/issues/114) remains a core bug.
+  The include handler replaces all identical include blocks on its first pass. The result is reused even if later template blocks change the data.
+  Use distinct include paths for each data variation as a workaround.
+  A core fix must process each include occurrence in order and preserve literal dollar characters in included files.
+- [#111: omit unmatched targets](https://github.com/dciccale/grunt-processhtml/issues/111) requests a new feature.
+  `strip: true` removes unmatched comments and keeps their contents.
+  Use `build:remove:dev,prod` to remove a block for the listed targets.
+  Combined block types and nested build blocks are unsupported.
+  Automatic removal of unmatched contents needs a separate opt-in option to preserve existing output.
+
 ## Release History
+- 0.4.5 Update all direct dependencies, use htmlprocessor 0.3.4, and document open issue workarounds.
 - 0.4.1 node-htmlprocessor@0.2.4
 - 0.4.0 Update Grunt to 1.0
 - 0.3.13 node-htmlprocessor@0.2.3 and clone data object (#85)

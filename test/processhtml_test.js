@@ -3,6 +3,13 @@
 var grunt = require('grunt');
 
 exports.processhtml = {
+  literal_scripts: function (test) {
+    test.expect(1);
+    var actual = grunt.file.read('test/fixtures/literal_scripts.processed.html');
+    var expected = grunt.file.read('test/expected/literal_scripts.html');
+    test.equal(actual, expected, 'keeps JavaScript and shell interpolation with explicit template delimiters');
+    test.done();
+  },
   dev: function (test) {
     test.expect(1);
 
