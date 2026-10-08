@@ -18,6 +18,14 @@ module.exports = function (grunt) {
       }
     },
     processhtml: {
+      commented_assets: {
+        options: {
+          commentMarker: 'phtml'
+        },
+        files: {
+          'test/fixtures/commented_assets.processed.html': ['test/fixtures/commented_assets.html']
+        }
+      },
       literal_scripts: {
         options: {
           process: true,

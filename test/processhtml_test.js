@@ -3,6 +3,13 @@
 var grunt = require('grunt');
 
 exports.processhtml = {
+  commented_assets: function (test) {
+    test.expect(1);
+    var actual = grunt.file.read('test/fixtures/commented_assets.processed.html');
+    var expected = grunt.file.read('test/expected/commented_assets.html');
+    test.equal(actual, expected, 'ignores commented CSS and JavaScript assets');
+    test.done();
+  },
   literal_scripts: function (test) {
     test.expect(1);
     var actual = grunt.file.read('test/fixtures/literal_scripts.processed.html');

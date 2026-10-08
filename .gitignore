@@ -2,3 +2,4 @@ node_modules
 npm-debug.log
 
 test/fixtures/literal_scripts.processed.html
+test/fixtures/commented_assets.processed.html
