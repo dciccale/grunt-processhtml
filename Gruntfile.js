@@ -18,6 +18,15 @@ module.exports = function (grunt) {
       }
     },
     processhtml: {
+      repeated_includes: {
+        options: {
+          recursive: true,
+          data: { my_var: '' }
+        },
+        files: {
+          'test/fixtures/repeated_includes.processed.html': ['test/fixtures/repeated_includes.html']
+        }
+      },
       commented_assets: {
         options: {
           commentMarker: 'phtml'

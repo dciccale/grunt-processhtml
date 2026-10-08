@@ -3,6 +3,13 @@
 var grunt = require('grunt');
 
 exports.processhtml = {
+  repeated_includes: function (test) {
+    test.expect(1);
+    var actual = grunt.file.read('test/fixtures/repeated_includes.processed.html');
+    var expected = grunt.file.read('test/expected/repeated_includes.html');
+    test.equal(actual, expected, 'renders each include with the current variables');
+    test.done();
+  },
   commented_assets: function (test) {
     test.expect(1);
     var actual = grunt.file.read('test/fixtures/commented_assets.processed.html');

@@ -3,3 +3,4 @@ npm-debug.log
 
 test/fixtures/literal_scripts.processed.html
 test/fixtures/commented_assets.processed.html
+test/fixtures/repeated_includes.processed.html
