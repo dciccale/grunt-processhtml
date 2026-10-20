@@ -12,7 +12,7 @@
 module.exports = function (grunt) {
   grunt.initConfig({
     jshint: {
-      all: ['tasks/**/*.js', '<%= nodeunit.tests %>'],
+      all: ['tasks/**/*.js', 'test/*_test.js'],
       options: {
         jshintrc: '.jshintrc'
       }
@@ -189,15 +189,20 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },
-    nodeunit: {
-      tests: ['test/*_test.js']
     }
   });
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-release');
-  grunt.registerTask('test', ['processhtml', 'nodeunit']);
+  grunt.registerTask('assert-fixtures', function () {
+    var done = this.async();
+    grunt.util.spawn({
+      cmd: process.execPath,
+      args: ['--test', 'test/processhtml_test.js'],
+      opts: { stdio: 'inherit' }
+    }, function (error) {
+      done(!error);
+    });
+  });
+  grunt.registerTask('test', ['processhtml', 'assert-fixtures']);
   grunt.registerTask('default', ['jshint', 'test']);
 };

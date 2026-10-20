@@ -275,9 +275,22 @@ grunt.initConfig({
 
 ### Development
 
-Use Node.js 16 or later to run the latest Grunt development tools.
+Use Node.js 22 or later and npm 10 or later for development.
 The published plugin keeps its Node.js 8.17 runtime requirement.
 Run `npm ci` and `npm test` to install dependencies and check the plugin.
+The fixture tests use Node's built-in test runner.
+The old `grunt release` helper has been removed because its dependencies are unmaintained.
+Use `npm version` and `npm publish` for releases.
+
+The development tools still include two packages with no published security fix:
+
+- `braces@3.0.3`: [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), through Grunt's file discovery tools.
+- `sprintf-js`: [GHSA-hp3w-g68c-fv3c](https://github.com/advisories/GHSA-hp3w-g68c-fv3c), through Grunt's YAML and string helpers.
+
+These alerts also affect packages that depend on them.
+Do not pass untrusted glob patterns or format strings to the development tools.
+Run `npm audit --omit=dev` to check the published plugin's runtime dependencies.
+
 
 ### Options
 

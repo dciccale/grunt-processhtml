@@ -46,8 +46,11 @@
   ],
   "devDependencies": {
     "grunt": "^1.6.3",
-    "grunt-contrib-jshint": "^3.2.0",
-    "grunt-contrib-nodeunit": "^5.0.0",
-    "grunt-release": "^0.14.0"
+    "grunt-contrib-jshint": "^3.2.0"
+  },
+  "overrides": {
+    "lodash": "$lodash",
+    "js-yaml": "^3.15.2",
+    "minimatch@<4": "^3.1.5"
   }
 }
