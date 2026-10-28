@@ -275,9 +275,16 @@ grunt.initConfig({
 
 ### Development
 
-Use Node.js 16 or later to run the latest Grunt development tools.
+Use Node.js 22 or later and npm 10 or later for development.
 The published plugin keeps its Node.js 8.17 runtime requirement.
 Run `npm ci` and `npm test` to install dependencies and check the plugin.
+The fixture tests use Node's built-in test runner.
+The old `grunt release` helper has been removed because its dependencies are unmaintained.
+Use `npm version` and `npm publish` for releases.
+
+Run `npm audit` to check all dependencies.
+Run `npm audit --omit=dev` to check the published plugin's runtime dependencies.
+
 
 ### Options
 
